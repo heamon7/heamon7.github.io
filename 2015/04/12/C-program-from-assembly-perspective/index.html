@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Linux,C," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="本文原为一次技术分享，已整理成 Gitbook 从汇编角度浅析C程序 初探C程序的汇编级形式用gcc将C程序编译成汇编代码并查看code/1.1/ add.c:  1234567891011121314151617int add(int a, int b) &amp;#123;    int result;    result = a + b;    return result;&amp;#125;int mai">
+<meta name="keywords" content="Linux,C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从汇编语言角度浅析C程序">
+<meta property="og:url" content="https://yuanzhe.me/2015/04/12/C-program-from-assembly-perspective/index.html">
+<meta property="og:site_name" content="7utopia">
+<meta property="og:description" content="本文原为一次技术分享，已整理成 Gitbook 从汇编角度浅析C程序 初探C程序的汇编级形式用gcc将C程序编译成汇编代码并查看code/1.1/ add.c:  1234567891011121314151617int add(int a, int b) &amp;#123;    int result;    result = a + b;    return result;&amp;#125;int mai">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/144787-b350ae6a729b4da4.png">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/144787-9c128a7b56764514.png">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/144787-dd7dfeda1a503bfd.png">
+<meta property="og:image" content="http://picture-repository-of-heamon7.qiniudn.com/The 8086 registers.png">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/144787-3627fd1acac439b2.png">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/144787-ae0e2f37275d272a.png">
+<meta property="og:image" content="http://picture-repository-of-heamon7.qiniudn.com/assembly操作数格式.png">
+<meta property="og:image" content="http://picture-repository-of-heamon7.qiniudn.com/assembly数据传送指令.png">
+<meta property="og:image" content="http://picture-repository-of-heamon7.qiniudn.com/assembly算术和逻辑运算指令.png">
+<meta property="og:image" content="http://picture-repository-of-heamon7.qiniudn.com/assembly过程调用指令.png">
+<meta property="og:image" content="http://picture-repository-of-heamon7.qiniudn.com/assembly程序启动时的Linux堆栈.png">
+<meta property="og:updated_time" content="2017-10-05T11:59:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从汇编语言角度浅析C程序">
+<meta name="twitter:description" content="本文原为一次技术分享，已整理成 Gitbook 从汇编角度浅析C程序 初探C程序的汇编级形式用gcc将C程序编译成汇编代码并查看code/1.1/ add.c:  1234567891011121314151617int add(int a, int b) &amp;#123;    int result;    result = a + b;    return result;&amp;#125;int mai">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/144787-b350ae6a729b4da4.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'O9N9R9LK3J',
+      apiKey: 'fb28a59ae7b5d5ed06d94a2bd30ee93f',
+      indexName: 'yuanzhe_me_blog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yuanzhe.me/2015/04/12/C-program-from-assembly-perspective/"/>
+
+
+
+
+
+  <title>从汇编语言角度浅析C程序 | 7utopia</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-107343010-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?741145baa6ea7b6e1f7a3fe96eb6e884";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">7utopia</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">思危、思退、思变</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resume">
+          <a href="/resume/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yuanzhe.me/2015/04/12/C-program-from-assembly-perspective/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yuan Zhe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/heamon7.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="7utopia">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从汇编语言角度浅析C程序</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-04-12T00:00:00+08:00">
+                2015-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2015/04/12/C-program-from-assembly-perspective/" class="leancloud_visitors" data-flag-title="从汇编语言角度浅析C程序">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文原为一次技术分享，已整理成 <a href="http://heamon7.gitbooks.io/cscw2-newly-to-assembly/content/" target="_blank" rel="external">Gitbook 从汇编角度浅析C程序</a></p>
+<h2 id="初探C程序的汇编级形式"><a href="#初探C程序的汇编级形式" class="headerlink" title="初探C程序的汇编级形式"></a>初探C程序的汇编级形式</h2><h3 id="用gcc将C程序编译成汇编代码并查看"><a href="#用gcc将C程序编译成汇编代码并查看" class="headerlink" title="用gcc将C程序编译成汇编代码并查看"></a>用gcc将C程序编译成汇编代码并查看</h3><p><code>code/1.1/ add.c:</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">int add(int a, int b) &#123;</div><div class="line">    int result;</div><div class="line"></div><div class="line">    result = a + b;</div><div class="line"></div><div class="line">    return result;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int main(int argc, char *argv[]) &#123;</div><div class="line">    int a,b,result;</div><div class="line"></div><div class="line">    a = 1;</div><div class="line">    b = 2;</div><div class="line">    result = add(a,b);</div><div class="line"></div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>shell命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -S add.c -o add.s</div></pre></td></tr></table></figure>
+<p>生成代码： <code>code/1.1/ add.s</code> ,关键部分:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">add:</div><div class="line">	pushq   %rbp</div><div class="line">	movq	%rsp, %rbp</div><div class="line">	movl	%edi, -20(%rbp)</div><div class="line">	movl	%esi, -24(%rbp)</div><div class="line">	movl	-24(%rbp), %eax</div><div class="line">	movl	-20(%rbp), %edx</div><div class="line">	addl	%edx, %eax</div><div class="line">	movl	%eax, -4(%rbp)</div><div class="line">	movl	-4(%rbp), %eax</div><div class="line">	popq	%rbp</div><div class="line">	ret</div><div class="line">main:</div><div class="line">	pushq   %rbp</div><div class="line">	movq	%rsp, %rbp</div><div class="line">	subq	$32, %rsp</div><div class="line">	movl	%edi, -20(%rbp)</div><div class="line">	movq	%rsi, -32(%rbp)</div><div class="line">	movl	$1, -12(%rbp)</div><div class="line">	movl	$2, -8(%rbp)</div><div class="line">	movl	-8(%rbp), %edx</div><div class="line">	movl	-12(%rbp), %eax</div><div class="line">	movl	%edx, %esi</div><div class="line">	movl	%eax, %edi</div><div class="line">	call	add</div><div class="line">	movl	%eax, -4(%rbp)</div><div class="line">	movl	$0, %eax</div><div class="line">	leave</div><div class="line">	ret</div></pre></td></tr></table></figure>
+<h3 id="C程序到可执行程序的编译链接过程"><a href="#C程序到可执行程序的编译链接过程" class="headerlink" title="C程序到可执行程序的编译链接过程"></a>C程序到可执行程序的编译链接过程</h3><p><img src="http://upload-images.jianshu.io/upload_images/144787-b350ae6a729b4da4.png" alt="gcc代理的编译过程"></p>
+<p>参考:</p>
+<ul>
+<li><a href="http://7905648.blog.51cto.com/7895648/1297255" target="_blank" rel="external">C语言的编译链接过程详解</a></li>
+<li><a href="http://tech.meituan.com/linker.html" target="_blank" rel="external">级语言的编译：链接及装载过程介绍</a></li>
+</ul>
+<h3 id="程序被执行时的内存分配情况概览"><a href="#程序被执行时的内存分配情况概览" class="headerlink" title="程序被执行时的内存分配情况概览"></a>程序被执行时的内存分配情况概览</h3><p>图解：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/144787-9c128a7b56764514.png" alt="进程内存区域的分布"></p>
+<h2 id="汇编语言及其相关指令简介"><a href="#汇编语言及其相关指令简介" class="headerlink" title="汇编语言及其相关指令简介"></a>汇编语言及其相关指令简介</h2><p>###汇编语言简介</p>
+<p>汇编语言采用了<a href="">助记符</a>（mnemonics）来代表特定低级机器语言的操作。特定的汇编目标指令集可能会包括特定的操作数。许多汇编程序可以识别代表地址和常量的标签（label）和符号（symbols），这样就可以用字符来代表操作数而无需采取<a href="">写死</a>的方式。普遍地说，特定的汇编语言和特定的机器语言指令集是一一对应的。</p>
+<p>汇编指令的两大风格分别是Intel汇编与AT&amp;T汇编，分别被<a href="/wiki/Microsoft_Windows">Microsoft Windows</a>/<a href="/wiki/Visual_C%2B%2B">Visual C++</a>与<a href="/wiki/GNU">GNU</a>/<a href="/wiki/GNU%E6%B1%87%E7%BC%96%E5%99%A8">Gas</a>采用（Gas也可使用Intel汇编风格）</p>
+<p>我们这里不介绍他们的使用区别，而直接介绍Linux下默认的AT&amp;T汇编风格。</p>
+<h3 id="8086-x86-x86-64简介"><a href="#8086-x86-x86-64简介" class="headerlink" title="8086,x86,x86-64简介"></a>8086,x86,x86-64简介</h3><h4 id="8086"><a href="#8086" class="headerlink" title="8086"></a>8086</h4><p><strong>8086</strong>是由<a href="/wiki/%E8%8B%B1%E7%89%B9%E5%B0%94%E5%85%AC%E5%8F%B8">英特爾公司</a>於1976年开始設計，1978年年中发布的Intel第一款16位<a href="/wiki/%E5%BE%AE%E8%99%95%E7%90%86%E5%99%A8">微處理器</a>，同时也是<a href="/wiki/X86">x86</a>架構之開端。</p>
+<p>所有的内部寄存器、内部及外部数据总线都是16位宽，因此是完全的16位微处理器。20位外部地址总线，因此物理寻址空间为1MB (即2^20<br> = 1,048,576).由于内部寄存器都是16位，对1M地址空间寻址时采取了段寻址方式。8086的封装采用40引脚的双列直插（dual in-line），数据总线与地址总线复用了前16个引脚。16位的I/O地址，因此独立的I/O寻址空间为64KB (即2^16<br> = 65,536).由于8086内部的地址寄存器是16 位宽，因而最大线性寻址空间为64 KB.使用超过64 KB内存空间的程序设计时，需要调整段寄存器（segment registers）。直到32位的<a href="/wiki/80386">80386</a>出现之前，8086的这种段寻址相当不便.</p>
+<ul>
+<li>8086 寄存器<br>8086有8个16比特的寄存器，包括栈寄存器SP与BP，但不包括指令寄存器IP、控制寄存器FLAGS以及四个段寄存器。AX, BX, CX, DX,这四个寄存器可以按照字节访问；但BP, SI, DI, SP,这四个地址寄存器只能按照16位宽访问。</li>
+</ul>
+<p>Block diagram of Intel 8086:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/144787-dd7dfeda1a503bfd.png" alt="Block diagram of Intel 8086"></p>
+<p><img src="http://picture-repository-of-heamon7.qiniudn.com/The 8086 registers.png" alt="The 8086 registers"></p>
+<h4 id="80386"><a href="#80386" class="headerlink" title="80386"></a>80386</h4><p><strong>Intel 80386</strong>，是<a href="/wiki/%E8%8B%B1%E7%89%B9%E5%B0%94">英特尔</a>（Intel）公司的一款<a href="/wiki/X86">x86</a>系列<a href="/wiki/CPU">CPU</a>，最初发布于1985年10月17日。<br>80386处理器被广泛应用在1980年代中期到1990年代中期的<a href="/wiki/IBM_PC%E5%85%BC%E5%AE%B9%E6%9C%BA">IBM PC兼容机</a>中。这些PC被称为“80386电脑”或“386电脑”，有时也简称“<strong>80386</strong>”或“<strong>386</strong>”。<br>80386的重要特点是：</p>
+<blockquote>
+<ul>
+<li>首次在<a href="/wiki/X86">x86</a>处理器中实现了32位元系统（<a href="/wiki/IA-32">IA-32</a>）。</li>
+<li>可配合使用<a href="/w/index.php?title=80387&amp;action=edit&amp;redlink=1">80387</a>数字<a href="/wiki/%E8%BC%94%E5%8A%A9%E8%99%95%E7%90%86%E5%99%A8">輔助處理器</a>增强<a href="/wiki/%E6%B5%AE%E7%82%B9">浮点</a>运算能力。</li>
+<li>首次采用<a href="/wiki/%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98">高速缓存</a>（外置）解决内存速度瓶颈问题</li>
+</ul>
+</blockquote>
+<ul>
+<li>80386寄存器</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/144787-3627fd1acac439b2.png" alt="x86通用寄存器"></p>
+<h4 id="x86-64"><a href="#x86-64" class="headerlink" title="x86-64"></a>x86-64</h4><p><strong>x86-64</strong>（簡稱<strong>x64</strong>）是<a href="/wiki/64%E4%BD%8D">64位</a>版本的<a href="/wiki/X86">x86</a><a href="/wiki/%E6%8C%87%E4%BB%A4%E9%9B%86">指令集</a>，向前相容於<a href="/wiki/16%E4%BD%8D">16位</a>及<a href="/wiki/32%E4%BD%8D">32位</a>的x86架構。x64於1999年由<a href="/wiki/AMD">AMD</a>設計，AMD首次公開64位元集以擴充給x86，稱為「<strong>AMD64</strong>」。其後也為<a href="/wiki/%E8%8B%B1%E7%89%B9%E7%88%BE">英特爾</a>所採用，現時英特爾稱之為「<strong>Intel 64</strong>」，在之前曾使用過「Clackamas Technology」 (CT)、「IA-32e」及「EM64T」。<br><a href="/wiki/Apple">Apple</a> 和 <a href="/wiki/Rpm">rpm</a> 以「x86-64」或「x86_64」稱呼此64位架構。<a href="/wiki/%E5%A4%AA%E9%99%BD%E9%9B%BB%E8%85%A6">太陽電腦</a>（已被<a href="/wiki/%E7%94%B2%E9%AA%A8%E6%96%87%E5%85%AC%E5%8F%B8">甲骨文公司</a>收購）及 <a href="/wiki/Microsoft">Microsoft</a> 稱之為「x64」。<a href="/wiki/BSD">BSD</a> 家族及其他 <a href="/wiki/Linux%E7%99%BC%E8%A1%8C%E7%89%88">Linux發行版</a>則使用「amd64」，32位元版本則稱為「i386」（或 i486/586/686）。<br>在x86-64出現以前，英特爾與<a href="/wiki/%E6%83%A0%E6%99%AE">惠普</a>聯合設計出<a href="/wiki/IA-64">IA-64</a>架構；惟IA-64並不與x86兼容，且市場反應較冷淡，同時受制於多個<a href="/wiki/%E5%B0%88%E5%88%A9%E6%AC%8A">專利權</a>，使其他廠商不能模仿。與x86兼容的AMD64架構便應運而生，其主要特點如名稱所述，既有支援64位通用<a href="/wiki/%E6%9A%AB%E5%AD%98%E5%99%A8">暫存器</a>、64位整數及邏輯運算、以及64位<a href="/wiki/%E8%99%9B%E6%93%AC%E4%BD%8D%E5%9D%80">虛擬位址</a>，設計人員又為架構作出不少改進，部份重大改變如下：</p>
+<blockquote>
+<ul>
+<li>新增暫存器</li>
+<li>地址闊度加長</li>
+<li><a href="/wiki/SSE">SSE2</a>、<a href="/wiki/SSE">SSE3</a>指令</li>
+<li><a href="/wiki/NX%E4%BD%8D%E5%85%83">NX位元</a>：AMD64其中一個特色是擁有「禁止執行」（No-Execute）的位元，可以防止<a href="/wiki/%E8%A0%95%E8%99%AB%E7%97%85%E6%AF%92">蠕蟲病毒</a>以<a href="/wiki/%E7%B7%A9%E8%A1%9D%E5%8D%80%E6%BA%A2%E4%BD%8D">緩衝區溢位</a>的方式來進行攻擊。</li>
+</ul>
+</blockquote>
+<ul>
+<li>x86-64寄存器<br><img src="http://upload-images.jianshu.io/upload_images/144787-ae0e2f37275d272a.png" alt="x86-64寄存器"></li>
+</ul>
+<p>（CPU中程序员唯一能够控制的就是寄存器）</p>
+<h3 id="AT-amp-T风格x86-64汇编指令"><a href="#AT-amp-T风格x86-64汇编指令" class="headerlink" title="AT&amp;T风格x86-64汇编指令"></a>AT&amp;T风格x86-64汇编指令</h3><h4 id="操作数指示符"><a href="#操作数指示符" class="headerlink" title="操作数指示符"></a>操作数指示符</h4><p><img src="http://picture-repository-of-heamon7.qiniudn.com/assembly操作数格式.png" alt="操作数格式"></p>
+<p> <strong>寻址模式</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ADDRESS_OR_OFFSET(%BASE_OR_OFFSET,%INDEX,MULTIPLIER)</div></pre></td></tr></table></figure>
+<p>它所表示的地址可以这样计算出来：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">FINAL ADDRESS = ADDRESS_OR_OFFSET + BASE_OR_OFFSET + MULTIPLIER * INDEX</div></pre></td></tr></table></figure>
+<p>其中ADDRESS_OR_OFFSET和MULTIPLIER必须是常数，BASE_OR_OFFSET和INDEX必须是寄存器。在有些寻址方式中会省略这4项中的某些项，相当于这些项是0。</p>
+<blockquote>
+<ul>
+<li>直接寻址（Direct Addressing Mode）<a href=""></a>。只使用ADDRESS_OR_OFFSET寻址，例如movl ADDRESS, %eax<br>把ADDRESS地址处的32位数传送到eax<br>寄存器。</li>
+<li>变址寻址（Indexed Addressing Mode）<a href=""></a> 。上一节的movl data_items(,%edi,4), %eax<br>就属于这种寻址方式，用于访问数组元素比较方便。</li>
+<li>间接寻址（Indirect Addressing Mode）<a href=""></a>。只使用BASE_OR_OFFSET寻址，例如movl (%eax), %ebx，把eax寄存器的值看作地址，把这个地址处的32位数传送到ebx寄存器。注意和movl %eax, %ebx区分开。</li>
+<li>基址寻址（Base Pointer Addressing Mode）<a href=""></a>。只使用ADDRESS_OR_OFFSET和BASE_OR_OFFSET寻址，例如movl 4(%eax), %ebx ，用于访问结构体成员比较方便，例如一个结构体的基地址保存在eax 寄存器中，其中一个成员在结构体内的偏移量是4字节，要把这个成员读上来就可以用这条指令。</li>
+<li>立即数寻址（Immediate Mode）<a href=""></a>。就是指令中有一个操作数是立即数，例如movl $12, %eax 中的$12 ，这其实跟寻址没什么关系，但也算作一种寻址方式。</li>
+<li>寄存器寻址（Register Addressing Mode）<a href=""></a>。就是指令中有一个操作数是寄存器，例如movl $12, %eax 中的%eax ，这跟内存寻址没什么关系，但也算作一种寻址方式。在汇编程序中寄存器用助记符来表示，在机器指令中则要用几个Bit表示寄存器的编号，这几个Bit也可以看作寄存器的地址，但是和内存地址不在一个地址空间。</li>
+</ul>
+</blockquote>
+<p><strong>数据传送指令</strong><br><img src="http://picture-repository-of-heamon7.qiniudn.com/assembly数据传送指令.png" alt="数据传送指令"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mov S,D</div><div class="line">push S</div><div class="line">pop D</div></pre></td></tr></table></figure>
+<p><strong>算术和逻辑运算指令</strong><br><img src="http://picture-repository-of-heamon7.qiniudn.com/assembly算术和逻辑运算指令.png" alt="算术和逻辑运算指令"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">inc D</div><div class="line">add S,D</div><div class="line">sub D</div></pre></td></tr></table></figure>
+<p><strong>过程调用指令</strong><br><img src="http://picture-repository-of-heamon7.qiniudn.com/assembly过程调用指令.png" alt="过程调用指令"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">call Lable</div><div class="line">leave</div><div class="line">ret</div></pre></td></tr></table></figure>
+<p>上面这三条指令每一条都相当于几条指令</p>
+<h2 id="用汇编分析C程序的工具介绍"><a href="#用汇编分析C程序的工具介绍" class="headerlink" title="用汇编分析C程序的工具介绍"></a>用汇编分析C程序的工具介绍</h2><p>###gcc<br>C 编程中相关文件后缀</p>
+<blockquote>
+<p>.a    静态库 (archive)<br>.c    C源代码（需要编译预处理）<br>.h    C源代码头文件<br>.i    C源代码（不需编译预处理）<br>.o    对象文件<br>.s    汇编语言代码<br>.so    动态库</p>
+</blockquote>
+<p>gcc 常用命令参考：</p>
+<ul>
+<li><a href="http://man.linuxde.net/gcc" target="_blank" rel="external">Linux 命令大全-gcc命令</a></li>
+<li><a href="http://wiki.ubuntu.org.cn/Gcchowto" target="_blank" rel="external">Gcc 使用入门</a></li>
+<li><a href="http://wiki.ubuntu.org.cn/Compiling_C" target="_blank" rel="external">编译 C 程序</a></li>
+</ul>
+<h3 id="gdb-使用"><a href="#gdb-使用" class="headerlink" title="gdb 使用"></a>gdb 使用</h3><p>常用命令：</p>
+<ul>
+<li><a href="http://wiki.ubuntu.org.cn/%E7%94%A8GDB%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F" target="_blank" rel="external">用GDB调试程序</a></li>
+<li><a href="http://wiki.ubuntu.org.cn/index.php?title=Insight%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%EF%BC%88gdb%E7%9A%84%E6%9C%80%E4%BC%98%E5%89%8D%E7%AB%AF%EF%BC%89&amp;variant=zh-hans" target="_blank" rel="external">Insight的使用方法（gdb的最优前端）</a></li>
+</ul>
+<h2 id="再探C程序的汇编级形式："><a href="#再探C程序的汇编级形式：" class="headerlink" title="再探C程序的汇编级形式："></a>再探C程序的汇编级形式：</h2><p>gcc编译链接得到目标文件:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -g -Wall add.c -o add</div></pre></td></tr></table></figure>
+<p>利用gdb查看汇编代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gdb -q add</div></pre></td></tr></table></figure>
+<p>得到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">heamon7@ubuntu:~/Project/test$ gdb -q add</div><div class="line">Reading symbols from add...done.</div><div class="line">(gdb) l 1,20</div><div class="line">	int add(int a, int b) &#123;</div><div class="line">	    int result;</div><div class="line"></div><div class="line">	    result = a + b;</div><div class="line"></div><div class="line">	    return result;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	int main(int argc, char *argv[]) &#123;</div><div class="line">	    int a,b,result;</div><div class="line"></div><div class="line">	    a = 1;</div><div class="line">	    b = 2;</div><div class="line">	    result = add(a,b);</div><div class="line"></div><div class="line">	    return 0;</div><div class="line">	&#125;</div><div class="line">(gdb) disass add</div><div class="line">Dump of assembler code for function add:</div><div class="line">   0x00000000004004ed &lt;+0&gt;:	push   %rbp</div><div class="line">   0x00000000004004ee &lt;+1&gt;:	mov    %rsp,%rbp</div><div class="line">   0x00000000004004f1 &lt;+4&gt;:	mov    %edi,-0x14(%rbp)</div><div class="line">   0x00000000004004f4 &lt;+7&gt;:	mov    %esi,-0x18(%rbp)</div><div class="line">   0x00000000004004f7 &lt;+10&gt;:	mov    -0x18(%rbp),%eax</div><div class="line">   0x00000000004004fa &lt;+13&gt;:	mov    -0x14(%rbp),%edx</div><div class="line">   0x00000000004004fd &lt;+16&gt;:	add    %edx,%eax</div><div class="line">   0x00000000004004ff &lt;+18&gt;:	mov    %eax,-0x4(%rbp)</div><div class="line">   0x0000000000400502 &lt;+21&gt;:	mov    -0x4(%rbp),%eax</div><div class="line">   0x0000000000400505 &lt;+24&gt;:	pop    %rbp</div><div class="line">   0x0000000000400506 &lt;+25&gt;:	retq</div><div class="line">End of assembler dump.</div><div class="line">(gdb) disass main</div><div class="line">Dump of assembler code for function main:</div><div class="line">   0x0000000000400507 &lt;+0&gt;:	push   %rbp</div><div class="line">   0x0000000000400508 &lt;+1&gt;:	mov    %rsp,%rbp</div><div class="line">   0x000000000040050b &lt;+4&gt;:	sub    $0x20,%rsp</div><div class="line">   0x000000000040050f &lt;+8&gt;:	mov    %edi,-0x14(%rbp)</div><div class="line">   0x0000000000400512 &lt;+11&gt;:	mov    %rsi,-0x20(%rbp)</div><div class="line">   0x0000000000400516 &lt;+15&gt;:	movl   $0x1,-0xc(%rbp)</div><div class="line">   0x000000000040051d &lt;+22&gt;:	movl   $0x2,-0x8(%rbp)</div><div class="line">   0x0000000000400524 &lt;+29&gt;:	mov    -0x8(%rbp),%edx</div><div class="line">   0x0000000000400527 &lt;+32&gt;:	mov    -0xc(%rbp),%eax</div><div class="line">   0x000000000040052a &lt;+35&gt;:	mov    %edx,%esi</div><div class="line">   0x000000000040052c &lt;+37&gt;:	mov    %eax,%edi</div><div class="line">   0x000000000040052e &lt;+39&gt;:	callq  0x4004ed &lt;add&gt;</div><div class="line">   0x0000000000400533 &lt;+44&gt;:	mov    %eax,-0x4(%rbp)</div><div class="line">   0x0000000000400536 &lt;+47&gt;:	mov    $0x0,%eax</div><div class="line">   0x000000000040053b &lt;+52&gt;:	leaveq</div><div class="line">   0x000000000040053c &lt;+53&gt;:	retq</div><div class="line">End of assembler dump.</div><div class="line">(gdb)</div></pre></td></tr></table></figure>
+<p>接着打断点，进行常规调试，查看程序的运行的情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">(gdb) b 14</div><div class="line">Breakpoint 1 at 0x400524: file add.c, line 14.</div><div class="line">(gdb) r</div><div class="line">Starting program: /home/heamon7/Project/test/add</div><div class="line"></div><div class="line">Breakpoint 1, main (argc=1, argv=0x7fffffffe658) at add.c:14</div><div class="line">14	    result = add(a,b);</div><div class="line">(gdb) p a</div><div class="line">$1 = 1</div><div class="line">(gdb) p b</div><div class="line">$2 = 2</div><div class="line">(gdb) p result</div><div class="line">$3 = 0</div><div class="line">(gdb) s</div><div class="line">add (a=1, b=2) at add.c:4</div><div class="line">4	    result = a + b;</div><div class="line">(gdb) s</div><div class="line">6	    return result;</div><div class="line">(gdb) s</div><div class="line">7	&#125;</div><div class="line">(gdb) p result</div><div class="line">$4 = 3</div><div class="line">(gdb) c</div><div class="line">Continuing.</div><div class="line">[Inferior 1 (process 23833) exited normally]</div><div class="line">(gdb)</div></pre></td></tr></table></figure>
+<p>接着我们看一下从机器级层面对代码进行调试，查看程序的运行情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">(gdb) b 12</div><div class="line">Breakpoint 1 at 0x400516: file add.c, line 12.</div><div class="line">(gdb) r</div><div class="line">Starting program: /home/heamon7/Project/test/add</div><div class="line"></div><div class="line">Breakpoint 1, main (argc=1, argv=0x7fffffffe658) at add.c:12</div><div class="line">12	    a = 1;</div><div class="line">(gdb) si</div><div class="line">13	    b = 2;</div><div class="line">(gdb)</div><div class="line">14	    result = add(a,b);</div><div class="line">(gdb)</div><div class="line">0x0000000000400527	14	    result = add(a,b);</div><div class="line">(gdb)</div><div class="line">0x000000000040052a	14	    result = add(a,b);</div><div class="line">(gdb)</div><div class="line">0x000000000040052c	14	    result = add(a,b);</div><div class="line">(gdb)</div><div class="line">0x000000000040052e	14	    result = add(a,b);</div><div class="line">(gdb)</div><div class="line">add (a=0, b=0) at add.c:1</div><div class="line">1	int add(int a, int b) &#123;</div><div class="line">(gdb)</div><div class="line">0x00000000004004ee	1	int add(int a, int b) &#123;</div><div class="line">(gdb)</div><div class="line">0x00000000004004f1	1	int add(int a, int b) &#123;</div><div class="line">(gdb)</div><div class="line">0x00000000004004f4	1	int add(int a, int b) &#123;</div><div class="line">(gdb)</div><div class="line">4	    result = a + b;</div><div class="line">(gdb)</div><div class="line">0x00000000004004fa	4	    result = a + b;</div><div class="line">(gdb)</div><div class="line">0x00000000004004fd	4	    result = a + b;</div><div class="line">(gdb)</div><div class="line">0x00000000004004ff	4	    result = a + b;</div><div class="line">(gdb)</div><div class="line">6	    return result;</div><div class="line">(gdb)</div><div class="line">7	&#125;</div><div class="line">(gdb)</div><div class="line">0x0000000000400506	7	&#125;</div><div class="line">(gdb)</div><div class="line">0x0000000000400533 in main (argc=1, argv=0x7fffffffe658) at add.c:14</div><div class="line">14	    result = add(a,b);</div><div class="line">(gdb)</div><div class="line">16	    return 0;</div><div class="line">(gdb)</div><div class="line">17	&#125;</div><div class="line">(gdb)</div><div class="line">0x000000000040053c	17	&#125;</div><div class="line">(gdb)</div><div class="line">__libc_start_main (main=0x400507 &lt;main&gt;, argc=1, argv=0x7fffffffe658,</div><div class="line">    init=&lt;optimized out&gt;, fini=&lt;optimized out&gt;, rtld_fini=&lt;optimized out&gt;,</div><div class="line">    stack_end=0x7fffffffe648) at libc-start.c:321</div><div class="line">321	libc-start.c: No such file or directory.</div><div class="line">(gdb) c</div><div class="line">Continuing.</div><div class="line">[Inferior 1 (process 23945) exited normally]</div><div class="line">(gdb)</div></pre></td></tr></table></figure>
+<p>这里的运行情况和我们常规调试看到的并不一样，我们回到之前的汇编代码，分析一下每一步在干什么。<br>为了方便查看源C代码和汇编代码的对应关系，我们利用反汇编工具objdump得到的反汇编代码，来分析程序执行过程。<br>从目标文件反汇编得到的汇编代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gcc -g -Wall add.c -o add</div><div class="line">objdump -S add</div></pre></td></tr></table></figure>
+<p>得到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">00000000004004ed &lt;add&gt;:</div><div class="line">int add(int a, int b) &#123;</div><div class="line">  4004ed:	55                   	push   %rbp</div><div class="line">  4004ee:	48 89 e5             	mov    %rsp,%rbp</div><div class="line">  4004f1:	89 7d ec             	mov    %edi,-0x14(%rbp)</div><div class="line">  4004f4:	89 75 e8             	mov    %esi,-0x18(%rbp)</div><div class="line">    int result;</div><div class="line"></div><div class="line">    result = a + b;</div><div class="line">  4004f7:	8b 45 e8             	mov    -0x18(%rbp),%eax</div><div class="line">  4004fa:	8b 55 ec             	mov    -0x14(%rbp),%edx</div><div class="line">  4004fd:	01 d0                	add    %edx,%eax</div><div class="line">  4004ff:	89 45 fc             	mov    %eax,-0x4(%rbp)</div><div class="line"></div><div class="line">    return result;</div><div class="line">  400502:	8b 45 fc             	mov    -0x4(%rbp),%eax</div><div class="line">&#125;</div><div class="line">  400505:	5d                   	pop    %rbp</div><div class="line">  400506:	c3                   	retq</div><div class="line"></div><div class="line">0000000000400507 &lt;main&gt;:</div><div class="line"></div><div class="line">int main(int argc, char *argv[]) &#123;</div><div class="line">  400507:	55                   	push   %rbp   //建立main函数的栈帧</div><div class="line">  400508:	48 89 e5             	mov    %rsp,%rbp   //建立main函数的栈帧</div><div class="line">  40050b:	48 83 ec 20          	sub    $0x20,%rsp   //为main函数分配栈帧空间，此处为32个字节</div><div class="line">  40050f:	89 7d ec             	mov    %edi,-0x14(%rbp)   //将系统传给main函数的第一个参数复制到自己的栈帧（可以查看值吗？）</div><div class="line">  400512:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)   //将系统传给main函数的第二个参数复制到自己的栈帧，,并存放在栈帧的最顶部（可以查看值吗？）      </div><div class="line"></div><div class="line">    int a,b,result;</div><div class="line"></div><div class="line">    a = 1;</div><div class="line">  400516:	c7 45 f4 01 00 00 00 	movl   $0x1,-0xc(%rbp)   //此处为给main函数的局部变量a赋值过程，将该值复制到main函数的栈帧中；使用movl表明这个变量是4个字节的，打在C代码第12行的断点，在汇编代码里实际断点在这里</div><div class="line">    b = 2;</div><div class="line">  40051d:	c7 45 f8 02 00 00 00 	movl   $0x2,-0x8(%rbp)   //此处为给main函数的局部变量b赋值过程，将该值复制到main函数的栈帧中；可以看出局部变量的地址是从低向高分配的</div><div class="line">    result = add(a,b);</div><div class="line">  400524:	8b 55 f8             	mov    -0x8(%rbp),%edx</div><div class="line">  400527:	8b 45 f4             	mov    -0xc(%rbp),%eax</div><div class="line">  40052a:	89 d6                	mov    %edx,%esi</div><div class="line">  40052c:	89 c7                	mov    %eax,%edi</div><div class="line">  40052e:	e8 ba ff ff ff       	callq  4004ed &lt;add&gt;</div><div class="line">  400533:	89 45 fc             	mov    %eax,-0x4(%rbp)</div><div class="line"></div><div class="line">    return 0;</div><div class="line">  400536:	b8 00 00 00 00       	mov    $0x0,%eax</div><div class="line">&#125;</div><div class="line">  40053b:	c9                   	leaveq</div><div class="line">  40053c:	c3                   	retq</div><div class="line">  40053d:	0f 1f 00             	nopl   (%rax)</div></pre></td></tr></table></figure>
+<p>接下来，我们对以上代码逐段分析：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">int main(int argc, char *argv[]) &#123;</div><div class="line">  400507:	55                   	push   %rbp   //建立main函数的栈帧</div><div class="line">  400508:	48 89 e5             	mov    %rsp,%rbp   //建立main函数的栈帧</div><div class="line">  40050b:	48 83 ec 20          	sub    $0x20,%rsp   //为main函数分配栈帧空间，此处为32个字节</div><div class="line">  40050f:	89 7d ec             	mov    %edi,-0x14(%rbp)   //将系统传给main函数的第一个参数复制到自己的栈帧（可以查看值吗？）</div><div class="line">  400512:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)   //将系统传给main函数的第二个参数复制到自己的栈帧，,并存放在栈帧的最顶部（可以查看值吗？）</div></pre></td></tr></table></figure>
+<p>此时通过：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(gdb) x/1xg $rbp-0x20</div><div class="line">0x7fffffffe550:	0x00007fffffffe658</div><div class="line">(gdb) x/1xw $rbp-0x14</div><div class="line">0x7fffffffe55c:	0x00000001</div></pre></td></tr></table></figure>
+<p>我们发现传递给main函数的第一个参数的值是1，而第二个参数的值貌似是一个内存地址（值的引用/指针）。并且可以看出函数的实参列表（Arglist）在栈帧中的地址是从高向低分配的。<br>同时我们认为main函数的栈帧是从此时的$rbp+0x10开始的，也就是在main函数栈帧的底部里还保存了rbp和rip。<br>（很奇怪的是两个参数之间存的值竟然是_start函数的的4字节地址，这里是考虑了8个字节的对齐吗？）<br>接着看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">  int a,b,result;</div><div class="line"></div><div class="line">  a = 1;</div><div class="line">400516:	c7 45 f4 01 00 00 00 	movl   $0x1,-0xc(%rbp)   //此处为给main函数的局部变量a赋值过程，将该值复制到main函数的栈帧中；使用movl表明这个变量是4个字节的</div><div class="line">  b = 2;</div><div class="line">40051d:	c7 45 f8 02 00 00 00 	movl   $0x2,-0x8(%rbp)   //此处为给main函数的局部变量b赋值过程，将该值复制到main函数的栈帧中</div></pre></td></tr></table></figure>
+<p>我们发现，打在C程序代码第12行的断点，在汇编代码实际断点在这里，也可以看出函数局部变量（Locals）的地址是从低向高分配的。而且一个有趣的现象是Arglist和Locals的起始地址都是-0x10(%rbp)。</p>
+<p>接着看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">  result = add(a,b);</div><div class="line">400524:	8b 55 f8             	mov    -0x8(%rbp),%edx   //这里把传递给add函数的第二个参数的值复制到寄存器edx</div><div class="line">400527:	8b 45 f4             	mov    -0xc(%rbp),%eax   //这里把传递给add函数的第一个参数的值复制到寄存器eax</div><div class="line">40052a:	89 d6                	mov    %edx,%esi   //接着把传递给add函数的第二个参数值从edx寄存器复制到esi寄存器</div><div class="line">40052c:	89 c7                	mov    %eax,%edi   //接着把传递给add函数的第一个参数值从eax寄存器复制到edi寄存器</div><div class="line">40052e:	e8 ba ff ff ff       	callq  4004ed &lt;add&gt;   //这里call命令让整个程序的执行流跳转到地址（地址长度是一个字节）0x4004ed（也就是add函数的地址）处，</div><div class="line">400533:	89 45 fc             	mov    %eax,-0x4(%rbp)   //（暂停main函数的分析，进而分析add函数；注意这条指令的地址在该函数的上一条指令被执行前，存入eip寄存器了）</div></pre></td></tr></table></figure>
+<p>这里实际的情况印证了之前讲到的，rdi，rsi，rdx，rcx，r8d，r9d这6个寄存器会依次暂存主调函数传给被调函数的参数。而之所以中间还要转存到edx和eax是因为，cpu从寄存器中读取数据的速度远远大于从内存中读取数据的速度；为了提高性能，一旦内存中一个参数被使用，那么先会被暂存到一个空余的寄存器中，以后再使用时，就不用从内存中读取了。<br>我们也可以看出在存取传递给函数的参数时，是从右向左读取的。<br>eip的工作原理是，cpu读取当前eip指向的指令，存入指令缓冲器（指令队列）中，然后eip根据被读取指令的长度，增加相应的字节数，指向下一条指令，然后cpu执行指令队列中刚刚读取的指令。<br>call这个跳转指令在执行时，实际分为两步，一个是先pop该指令执行时eip的值（即主调函数的调用发生时的下一条指令地址）到当前函数的栈帧中（当前栈帧增长，esp的值会减小8个字节），然后程序的执行流跳转到相应的地址处，即eip的值等于相应的地址（此处即为add函数的地址处0x00000000004004ed）。</p>
+<p>接着看add函数的内部：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">00000000004004ed &lt;add&gt;:</div><div class="line">int add(int a, int b) &#123;</div><div class="line">  4004ed:	55                   	push   %rbp   //首先把主调函数的栈基址入栈（栈增长，esp的值减小8个字节）</div><div class="line">  4004ee:	48 89 e5             	mov    %rsp,%rbp   // 让当前基址指针指向主调函数的栈顶</div><div class="line">  4004f1:	89 7d ec             	mov    %edi,-0x14(%rbp)   //将主调函数传给add函数的第一个实参复制到add函数的栈帧</div><div class="line">  4004f4:	89 75 e8             	mov    %esi,-0x18(%rbp)   //将主调函数传给add函数的第二个实参复制到add函数的栈帧</div></pre></td></tr></table></figure>
+<p>系统并没有像在main函数里的那样，显式地给add函数分配栈帧空间，原因是add函数内并不调用其他函数，因此没有必要让esp的值再发生变化。所以实际上add函数的栈帧的顶部和其主调函数的栈顶重合。<br>同时我们认为add函数的栈帧开始于此时的$rbp+0x10,<br>（这里为什么要保留16个字节的空间没有使用呢？）</p>
+<p>接着：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">  int result;</div><div class="line"></div><div class="line">  result = a + b;</div><div class="line">4004f7:	8b 45 e8             	mov    -0x18(%rbp),%eax   //将加法运算的第二个操作数的值从栈中复制到eax寄存器</div><div class="line">4004fa:	8b 55 ec             	mov    -0x14(%rbp),%edx   //将加法运算的第一个操作数的值从栈中复制到edx寄存器</div><div class="line">4004fd:	01 d0                	add    %edx,%eax   //执行加法运算，并将值保存在eax寄存器中</div><div class="line">4004ff:	89 45 fc             	mov    %eax,-0x4(%rbp)   //将eax寄存器中的值（得到的和）复制到add函数的栈帧中（这个地址就是add函数的局部变量result的地址）</div></pre></td></tr></table></figure>
+<p>这里验证了之前讲到的，在使用内存中定义的一个值时，会先把它复制到一个寄存器中暂存起来。</p>
+<p>接下来：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    return result;</div><div class="line">  400502:	8b 45 fc             	mov    -0x4(%rbp),%eax   //将返回值result复制到寄存器eax中</div><div class="line">&#125;</div><div class="line">  400505:	5d                   	pop    %rbp   //将add函数栈帧的栈顶值（上一个函数的栈基址）弹出到rbp寄存器中</div><div class="line">  400506:	c3                   	retq  //ret指令从栈中弹出地址，并跳转到这个地址，这里相当于把值弹出到eip寄存器中。</div></pre></td></tr></table></figure>
+<p>这里验证了前面讲的eax寄存器经常存储被调函数的返回值。执行到这里后，由于之前栈中压入的eip，跳转到 # callq 400ed <add> #指令的下一条指令。<br>然后：</add></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">  400533:	89 45 fc             	mov    %eax,-0x4(%rbp)   //将被调函数的返回值复制到main函数栈帧中(局部变量result）</div><div class="line"></div><div class="line">    return 0;</div><div class="line">  400536:	b8 00 00 00 00       	mov    $0x0,%eax   //main函数向它的主调函数返回值0</div><div class="line">&#125;</div><div class="line">  40053b:	c9                   	leaveq   //leave指令可以使栈做好返回准备，</div><div class="line">  40053c:	c3                   	retq  //同之前介绍的一样</div><div class="line">  40053d:	0f 1f 00             	nopl   (%rax)</div></pre></td></tr></table></figure>
+<p>leave指令相当于以下两条指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mov %rbp,%rsp</div><div class="line">pop %rbp</div></pre></td></tr></table></figure>
+<h2 id="函数调用栈分析"><a href="#函数调用栈分析" class="headerlink" title="函数调用栈分析"></a>函数调用栈分析</h2><p><img src="http://picture-repository-of-heamon7.qiniudn.com/assembly程序启动时的Linux堆栈.png" alt="程序启动时的Linux堆栈"></p>
+<h2 id="C程序中递归函数的汇编分析"><a href="#C程序中递归函数的汇编分析" class="headerlink" title="C程序中递归函数的汇编分析"></a>C程序中递归函数的汇编分析</h2><p>以斐波那契为例…</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Yuan Zhe
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yuanzhe.me/2015/04/12/C-program-from-assembly-perspective/" title="从汇编语言角度浅析C程序">https://yuanzhe.me/2015/04/12/C-program-from-assembly-perspective/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/C/" rel="tag"># C</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/02/13/knowledges-and-skills-of-pronunciation-in-French/" rel="next" title="法语语音知识与技巧">
+                <i class="fa fa-chevron-left"></i> 法语语音知识与技巧
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE1NC83NzAz"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/heamon7.jpg"
+              alt="Yuan Zhe" />
+          
+            <p class="site-author-name" itemprop="name">Yuan Zhe</p>
+            <p class="site-description motion-element" itemprop="description">heamon7's blog</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/heamon7" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:heamon7@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/108975408423202366876" target="_blank" title="Google">
+                  
+                    <i class="fa fa-fw fa-google"></i>Google</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/heamon7" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/heamon7yz" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://douban.com/people/heamon7" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>豆瓣</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/heamon7" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>知乎</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wuchong.me/" title="Jark's Blog" target="_blank">Jark's Blog</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#初探C程序的汇编级形式"><span class="nav-number">1.</span> <span class="nav-text">初探C程序的汇编级形式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用gcc将C程序编译成汇编代码并查看"><span class="nav-number">1.1.</span> <span class="nav-text">用gcc将C程序编译成汇编代码并查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C程序到可执行程序的编译链接过程"><span class="nav-number">1.2.</span> <span class="nav-text">C程序到可执行程序的编译链接过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序被执行时的内存分配情况概览"><span class="nav-number">1.3.</span> <span class="nav-text">程序被执行时的内存分配情况概览</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#汇编语言及其相关指令简介"><span class="nav-number">2.</span> <span class="nav-text">汇编语言及其相关指令简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8086-x86-x86-64简介"><span class="nav-number">2.1.</span> <span class="nav-text">8086,x86,x86-64简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8086"><span class="nav-number">2.1.1.</span> <span class="nav-text">8086</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#80386"><span class="nav-number">2.1.2.</span> <span class="nav-text">80386</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x86-64"><span class="nav-number">2.1.3.</span> <span class="nav-text">x86-64</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AT-amp-T风格x86-64汇编指令"><span class="nav-number">2.2.</span> <span class="nav-text">AT&T风格x86-64汇编指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#操作数指示符"><span class="nav-number">2.2.1.</span> <span class="nav-text">操作数指示符</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用汇编分析C程序的工具介绍"><span class="nav-number">3.</span> <span class="nav-text">用汇编分析C程序的工具介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gdb-使用"><span class="nav-number">3.1.</span> <span class="nav-text">gdb 使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再探C程序的汇编级形式："><span class="nav-number">4.</span> <span class="nav-text">再探C程序的汇编级形式：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数调用栈分析"><span class="nav-number">5.</span> <span class="nav-text">函数调用栈分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C程序中递归函数的汇编分析"><span class="nav-number">6.</span> <span class="nav-text">C程序中递归函数的汇编分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 &mdash; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yuan Zhe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+
+  <div class="footer-custom">Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("jHpnzdU4Qd1QQxycao55wbRP-gzGzoHsz", "C31AmMJvRF6LgPCmOQvmJOM7");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

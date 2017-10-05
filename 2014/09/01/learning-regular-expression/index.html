@@ -60,7 +60,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo,Blog," />
+  <meta name="keywords" content="Linux,RegEx," />
 
 
 
@@ -76,18 +76,24 @@
 
 
 
-<meta name="description" content="个人接触技术比较晚，认识博客还只是始于大一上学期末与 CSDN 的偶遇，之后平时学习之中，感觉遇到技术上问题时，很多时候解决办法都是得益于 Google 到某篇博客，比如 CSDN，cnblogs，以及一些独立博客。后来也断断续续在 CSDN 上写过几遍文章，但很遗憾没能持续下去。再后来接触独立博客久了，加之好奇心的驱动，决定自己折腾出一个独立博客。本篇文章先比较一下独立博客与像 CSDN 这样的">
-<meta name="keywords" content="Hexo,Blog">
+<meta name="description" content="暑假回家的路上，断断续续的看完《学习正则表达式》这本书，选择这本主要是因为书确实比较薄(142页)，快速入门很不错，后期需要深入研究的话，再结合大部头的《精通正则表达式》或者《学习正则表达式》就很不错。于是记录记录，加深印象。 先直接上一段正则表达式,如果我们要在一大段文本中找出带区号的(大陆的)电话号码，比如“这是我家的电话：0277-6184073，其实这个才是啦：027-77777777”这">
+<meta name="keywords" content="Linux,RegEx">
 <meta property="og:type" content="article">
-<meta property="og:title" content="WordPress 和 Hexo 等不同博客框架的比较">
-<meta property="og:url" content="https://yuanzhe.me/2014/07/20/comparison-of-diffrent-blog-frameworks/index.html">
+<meta property="og:title" content="学习正则表达式">
+<meta property="og:url" content="https://yuanzhe.me/2014/09/01/learning-regular-expression/index.html">
 <meta property="og:site_name" content="7utopia">
-<meta property="og:description" content="个人接触技术比较晚，认识博客还只是始于大一上学期末与 CSDN 的偶遇，之后平时学习之中，感觉遇到技术上问题时，很多时候解决办法都是得益于 Google 到某篇博客，比如 CSDN，cnblogs，以及一些独立博客。后来也断断续续在 CSDN 上写过几遍文章，但很遗憾没能持续下去。再后来接触独立博客久了，加之好奇心的驱动，决定自己折腾出一个独立博客。本篇文章先比较一下独立博客与像 CSDN 这样的">
+<meta property="og:description" content="暑假回家的路上，断断续续的看完《学习正则表达式》这本书，选择这本主要是因为书确实比较薄(142页)，快速入门很不错，后期需要深入研究的话，再结合大部头的《精通正则表达式》或者《学习正则表达式》就很不错。于是记录记录，加深印象。 先直接上一段正则表达式,如果我们要在一大段文本中找出带区号的(大陆的)电话号码，比如“这是我家的电话：0277-6184073，其实这个才是啦：027-77777777”这">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-05T08:40:39.000Z">
+<meta property="og:image" content="http://picture-repository-of-heamon7.qiniudn.com/201409121.jpg">
+<meta property="og:image" content="http://picture-repository-of-heamon7.qiniudn.com/201409122.jpg">
+<meta property="og:image" content="http://picture-repository-of-heamon7.qiniudn.com/201409123.jpg">
+<meta property="og:image" content="http://picture-repository-of-heamon7.qiniudn.com/201409124.jpg">
+<meta property="og:image" content="http://picture-repository-of-heamon7.qiniudn.com/201409125.jpg">
+<meta property="og:updated_time" content="2017-10-05T10:09:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WordPress 和 Hexo 等不同博客框架的比较">
-<meta name="twitter:description" content="个人接触技术比较晚，认识博客还只是始于大一上学期末与 CSDN 的偶遇，之后平时学习之中，感觉遇到技术上问题时，很多时候解决办法都是得益于 Google 到某篇博客，比如 CSDN，cnblogs，以及一些独立博客。后来也断断续续在 CSDN 上写过几遍文章，但很遗憾没能持续下去。再后来接触独立博客久了，加之好奇心的驱动，决定自己折腾出一个独立博客。本篇文章先比较一下独立博客与像 CSDN 这样的">
+<meta name="twitter:title" content="学习正则表达式">
+<meta name="twitter:description" content="暑假回家的路上，断断续续的看完《学习正则表达式》这本书，选择这本主要是因为书确实比较薄(142页)，快速入门很不错，后期需要深入研究的话，再结合大部头的《精通正则表达式》或者《学习正则表达式》就很不错。于是记录记录，加深印象。 先直接上一段正则表达式,如果我们要在一大段文本中找出带区号的(大陆的)电话号码，比如“这是我家的电话：0277-6184073，其实这个才是啦：027-77777777”这">
+<meta name="twitter:image" content="http://picture-repository-of-heamon7.qiniudn.com/201409121.jpg">
 
 
 
@@ -117,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://yuanzhe.me/2014/07/20/comparison-of-diffrent-blog-frameworks/"/>
+  <link rel="canonical" href="https://yuanzhe.me/2014/09/01/learning-regular-expression/"/>
 
 
 
 
 
-  <title>WordPress 和 Hexo 等不同博客框架的比较 | 7utopia</title>
+  <title>学习正则表达式 | 7utopia</title>
   
 
 
@@ -317,7 +323,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yuanzhe.me/2014/07/20/comparison-of-diffrent-blog-frameworks/">
+    <link itemprop="mainEntityOfPage" href="https://yuanzhe.me/2014/09/01/learning-regular-expression/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yuan Zhe">
@@ -334,7 +340,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">WordPress 和 Hexo 等不同博客框架的比较</h1>
+          <h1 class="post-title" itemprop="name headline">学习正则表达式</h1>
         
 
         <div class="post-meta">
@@ -346,8 +352,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-07-20T00:00:00+08:00">
-                2014-07-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-09-01T00:00:00+08:00">
+                2014-09-01
               </time>
             
 
@@ -369,8 +375,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Logging/" itemprop="url" rel="index">
-                    <span itemprop="name">Logging</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -386,7 +392,7 @@
 
           
           
-             <span id="/2014/07/20/comparison-of-diffrent-blog-frameworks/" class="leancloud_visitors" data-flag-title="WordPress 和 Hexo 等不同博客框架的比较">
+             <span id="/2014/09/01/learning-regular-expression/" class="leancloud_visitors" data-flag-title="学习正则表达式">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -448,30 +454,41 @@
       
 
       
-        <p>个人接触技术比较晚，认识博客还只是始于大一上学期末与 CSDN 的偶遇，之后平时学习之中，感觉遇到技术上问题时，很多时候解决办法都是得益于 Google 到某篇博客，比如 CSDN，cnblogs，以及一些独立博客。<br>后来也断断续续在 CSDN 上写过几遍文章，但很遗憾没能持续下去。再后来接触独立博客久了，加之好奇心的驱动，决定自己折腾出一个独立博客。<br>本篇文章先比较一下独立博客与像 CSDN 这样的 BSP 平台的写作的区别。对于像我这样的伪 geek 来说，毫无疑问是很重视对生活的自主控制权，自由永远是任何东西都无法替代的，在自己的博客里，你永远可以定制你自己的生活，而不用忍受那扫兴的广告等条条框框，还不用担心苦心经营的博客，随随便便就被天朝的审核制度封掉。虽说自建博客的访问量可能早期会很少（记得当时在 CSDN 的几篇博客几天就有近千人的访问量），但是仔细想想，我们写博客的最终意义并不是扩大自己的社交圈，而是个人知识与修养的沉淀，也许这本来就需要一个相对安静的环境，即使社交，我们需要的也仅仅是有质量的社交圈，希望遇到的是懂我们的人，另外就是建立自己的品牌，看你的博客就大概可以了解你是怎样的一个人，再有就是花时间做自己喜欢的事情，一定会认真的做好。<br>这里首先推荐几篇觉得不错的文章：</p>
-<blockquote>
-<ul>
-<li><a href="http://www.suyuzishi.net/personal-blog-no-return/" target="_blank" rel="external">独立博客不归路-苏于子时</a></li>
-<li><a href="http://mindhacks.cn/2009/02/15/why-you-should-start-blogging-now/" target="_blank" rel="external">为什么你应该写博客-刘未鹏</a></li>
-<li><a href="http://www.zhihu.com/question/19916345" target="_blank" rel="external">为什么要自建博客?-知乎</a></li>
+        <p>暑假回家的路上，断断续续的看完《学习正则表达式》这本书，选择这本主要是因为书确实比较薄(142页)，快速入门很不错，后期需要深入研究的话，再结合大部头的《精通正则表达式》或者《学习正则表达式》就很不错。于是记录记录，加深印象。</p>
+<p>先直接上一段正则表达式,如果我们要在一大段文本中找出带区号的(大陆的)电话号码，比如“这是我家的电话：0277-6184073，其实这个才是啦：027-77777777”这段话，我们就可以这样写正则表达式：0[1-9]{2,3}-\d{7,8} 。大家可以打开RegExr网站 试一下，会发现两段电话号码被高亮显示。<br>这里的第一个0被称作字符串字面值(string litera)。直接匹配电话号码的第一个字符0(大陆地区的区号均以0开头)，后面出现的 - 也是字符串字面值。</p>
+<p>方括号[和]被称作元字符(metacharacter),是正则表达式中有特殊意义的字符，不参与实际匹配，也是保留字符。作用是匹配方括号中出现的字符集合中的任意一个字符，[1-9]这种形式的正则表达式被称作字符组(character class),有时也叫做字符集(character set)(PS. 其实感觉应该指的是1-9，而不包括方括号)。这里表示匹配1至9这九个数中的任意一个。类似的还有[a-z],[_a-zA-Z0-9] , 后者表示数字，字母和下划线三者中的任意一个。</p>
+<p>花括号{和}被称作量词，和方括号[ ,]一样是元字符，不参与实际匹配，其中的数字表示待查找的前面那个对象出现的次数，比如a{2}就是连续两次出现a，a{2,3}就是连续出现两次或三次a。其他常用的量词还有 ? , * , +等，分别表示”零个或一个”,”零个或多个”,”一个或多个” 。这里比较容易混淆的就是点号. ,它 是一个通配符,不是量词，能够匹配任意字符(某些情况不能匹配行起始符，被称作dotall选项)。</p>
+<p>而\d 被称作字符组简写式(character shorthand),也叫转义字符(character escape)。这里 \d 等同于[0-9],所以字符组简写式也由此得名。类似的还有 \w ,等同于[_a-zA-Z0-9] ，而\D 和 \W 一般表示的意义和其对应的 \d 以及 \w 意义一般是相反的,后面会有详细介绍。</p>
+<h2 id="简单模式匹配-匹配数字-字符串，空白符和边界等"><a href="#简单模式匹配-匹配数字-字符串，空白符和边界等" class="headerlink" title="简单模式匹配(匹配数字,字符串，空白符和边界等)"></a>简单模式匹配(匹配数字,字符串，空白符和边界等)</h2><p>[0-9] 、[^0-9]以及 ^\d , 这里的脱字符^是取反的意思。而\D(等价于^\d)会匹配空格，标点符号和 \w 所匹配的内容。<br>常用字符简写式表：<br><img src="http://picture-repository-of-heamon7.qiniudn.com/201409121.jpg" alt="常用字符简写式表"><br>最常用的匹配空白符的表达式是 \s ,相当于[ \t\n\r] 。<br>常用空白符简写式表：<br><img src="http://picture-repository-of-heamon7.qiniudn.com/201409122.jpg" alt="常用空白符简写式表"></p>
+<p>对于匹配边界，\b 表示匹配单词的开始和结束,^和$分别匹配行的开头和结尾，而^$就是表示匹配空白行了。举个例子，\b7\b 匹配出的7，其左右都不会出现[_A-Za-z0-9]字符,而\B7\B则匹配出左右均是[_A-Za-z0-9]中的某个字符的7。</p>
+<p>这里有必要提一下元字符的字面值: .^$+?|(){}[]- 这15个元字符在正则表达式中有特殊含义(连字符-只在字符组的方括号中用来表示范围，在其他情况下，则无特殊含义)，如果要匹配文本中上述的某个字符，需要用类似于 \Q$\E 的形式，因为\Q和\E之间的任意字符都会被解释为普通字符。</p>
+<h2 id="选择分组和后向引用"><a href="#选择分组和后向引用" class="headerlink" title="选择分组和后向引用"></a>选择分组和后向引用</h2><h3 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h3><p>正则表达式中的常用选项：<br><img src="http://picture-repository-of-heamon7.qiniudn.com/201409123.jpg" alt="正则表达式常用选项"><br>下面分别以grep，perl命令为例：<br>grep -Ec “(the|The|THE)” test.txt<br>(-E表示使用扩展的ERE，而不是BRE，如果使用BRE则需要对括号进行转义；<br>-c选项返回匹配的行数，而不是单词，括号对选择操作分组)<br>grep -Eo “(the|The|THE)” test.txt | wc -l<br>(-o选项表示只显示一行中与指定模式匹配的部分；<br>-wc是单词计数的命令，而-l是对输入的行数统计)<br>对于perl执行同种匹配，则这样写：<br>perl -ne ‘print if /(the|The|THE/)’ test.txt 或者<br>perl -ne ‘print if /(?i)the/‘ test.txt 或者<br>perl -ne ‘print if /the/i’ test.txt</p>
+<h3 id="子模式-subpattern-，多数情况指的是分组中的一个或多个分组"><a href="#子模式-subpattern-，多数情况指的是分组中的一个或多个分组" class="headerlink" title="子模式(subpattern)，多数情况指的是分组中的一个或多个分组"></a>子模式(subpattern)，多数情况指的是分组中的一个或多个分组</h3><p>某种意义上(the|The|THE)有三个子模式，只是不相互依赖，而(t|T)h(e|eir)中子模式依赖于前面的模式，等同于下面的字符组(子模式)：\b[tT]h[ceinry]*\b</p>
+<h3 id="捕获分组和后向引用"><a href="#捕获分组和后向引用" class="headerlink" title="捕获分组和后向引用"></a>捕获分组和后向引用</h3><p>由一对括号捕获分组， 由\1,\2 或者$1,$2后向引用,如 (It is)(a nice day)捕获后，用\u$2\l$1引用,则可以得到 A nice day it is.<br>命名分组： (?It is)(?a nice day)捕获，引用：\u$+{two} \l${one} 。<br>命名分组的语法：<br><img src="http://picture-repository-of-heamon7.qiniudn.com/201409124.jpg" alt="命名分组的语法"></p>
+<h3 id="非捕获分组-Non-Capturing-Group"><a href="#非捕获分组-Non-Capturing-Group" class="headerlink" title="非捕获分组(Non-Capturing Group)."></a>非捕获分组(Non-Capturing Group).</h3><p>非捕获分组不会将其内容存储在内存中，在你不想引用分组的时候，可以使用这个。比如(?i:the),该选项i可以房子啊问号和冒号之间。<br>原子分组: 这种分组可以将回溯操作关闭。但只针对原子分组内部的部分，语法为(?&gt;the).在正则表达式处理过程缓慢的一个因素就是回溯，re2这样的非回溯引擎可彻底关闭回溯操作。</p>
+<h2 id="字符组-有时也被成为方括号表达式"><a href="#字符组-有时也被成为方括号表达式" class="headerlink" title="字符组(有时也被成为方括号表达式)"></a>字符组(有时也被成为方括号表达式)</h2><ul>
+<li>匹配 0-99的偶数：\b[24690]\b|\b[1-9][24680]\b， 匹配罗马数字：I{0,3}V?I{0,2}</li>
+<li>并集与差集： 两个字符组的并集，[0-3[6-9]],匹配差集，[a-z&amp;&amp;[^m-r]]表示匹配a-z之间的字符，但是m到r之间的除外。</li>
+<li>匹配Unicode和其他字符。/x用来匹配0-FF之间的字符，/u用来匹配100-FFFF之间的四位十六进制数，U用来匹配10000-7FFFFFFF范围内的八位十六进制数。</li>
 </ul>
-</blockquote>
-<p>好了，废话说了这么多，是该进入正题了。决定自建博客后，一一尝试了Wordpress，以及基于 <a href="http://baike.baidu.com/view/7878719.htm" target="_blank" rel="external">Jekyll</a> 的 HPSTR，Octopress和Hexo，</p>
-<h2 id="Wordpress"><a href="#Wordpress" class="headerlink" title="Wordpress"></a>Wordpress</h2><p>感觉 <a href="http://baike.baidu.com/view/23618.htm" target="_blank" rel="external">Wordpress</a>过于臃肿，需要自己管理数据库，管理空间等，很是麻烦。</p>
-<h2 id="HPSTR"><a href="#HPSTR" class="headerlink" title="HPSTR"></a>HPSTR</h2><p>然后就是基于Jekyll的HPSTR主题，了解到这个还是看了 <a href="http://www.dss886.com/github/2014/05/05/03/" target="_blank" rel="external">ds886 学长的文章</a>，他用的就是 HPSTR主题，试了之后，感觉界面应该算是最简洁，明快，优雅的了，但是就是有点过了，感觉左上方的菜单对于读者并不够友好，而且发现这个主题的中文参考资料并不是很多，担心之后遇到问题不好解决。</p>
-<h2 id="Octopress"><a href="#Octopress" class="headerlink" title="Octopress"></a>Octopress</h2><p>于是毫不犹豫的转向Octopress，参考了 <a href="http://cn.soulmachine.me/blog/20130401/" target="_blank" rel="external">灵魂机器的文章</a> 在不到半小时内，顺利的在 Github上访问到了自己的 Octopress 博客，第一感觉就是默认主题真不怎么样，太“黑”客了，虽说安装很快，但是深感发布一篇文章步骤之繁杂，而且了解到一旦后期文章多了起来之后，每次编译时间都需要很久。</p>
-<h2 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h2><p>当时对 Node.js 比较感兴趣，最后就准备试试 Hexo，Google 了一下，发现很多基于 Hexo 框架的文章，而且 Hexo 的作者又是中国台湾的，于是好感大增，参考 <a href="http://zipperary.com/categories/hexo/" target="_blank" rel="external">Zipperary</a> 以及 <a href="http://yangjian.me/workspace/building-blog-with-hexo/" target="_blank" rel="external">Aliman</a> 的文章，又有了前面的基础，这次就更快建好了，唯一遇到的一个问题就是 <a href="http://nodejs.org/download/" target="_blank" rel="external">安装node</a> 时，建议不要选二进制的 .exe 安装，而选 .msi 的安装包安装，试试就知道的。发现安装过程还算比较简单的。更重要的是，发布一篇文章的命令实在是太简单了，只有 n-g-(s)-d 几步。看了看默认主题，感觉也不错，而且 Github 上可选的主题也很多，最后是看到 <a href="http://yangjian.me/pacman/" target="_blank" rel="external">Pacman风格</a>，应有的功能都有，也比较简洁，扁平化，响应式布局的体验很是不错，就选定了一个优化版的 <a href="http://wuchong.me/blog/2014/01/25/change-to-pacman/" target="_blank" rel="external">Jackman</a>，希望后期也能够自己小小优化一下，完全符合自己的风格。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>好了，最后总结一下:<br>如果你只是想记录记录生活和感悟，纯粹的写作，那么选一个 CSDN 或者简书这样的 BSP 平台写博客还是不错的；如果你不是很想了解 Ruby，Nodejs 这样的语言，但又想拥有自己的独立博客而且不介意 Wordpress 的臃肿，它也是一个不错的选择，毕竟这个的使用群体还是相当大的；如果你有洁癖，对界面要求极简，建议试试 HPSTR；如果想顺便学习 Ruby，请选择 Octopress，如果你和我一样，对 Nodejs 感兴趣，而且对速度有极致追求，对界面有要求但不挑剔，喜欢折腾就选择 Hexo 吧。<br>最后祝大家都能找到一个自己喜欢的记录生活的方式，若干年后，你一定会感谢现在的你！<br>大家有什么问题也可以找我交流哦！<br><strong>Let’s share ,Let’s play !</strong></p>
+<p>匹配Unicode及其他字符表：<br><img src="http://picture-repository-of-heamon7.qiniudn.com/201409125.jpg" alt="匹配Unicode及其他字符表"></p>
+<h2 id="量词"><a href="#量词" class="headerlink" title="量词"></a>量词</h2><h3 id="贪心、懒惰和占有"><a href="#贪心、懒惰和占有" class="headerlink" title="贪心、懒惰和占有"></a>贪心、懒惰和占有</h3><ul>
+<li>贪心 量词自身是贪心的，会首先匹配整个字符串。如果失败则会退回一个字符后再次尝试，这个过程叫做回溯(backtracking)，此外，它还会记录所有的行为。</li>
+<li>懒惰的量词则从目标的起始位置开始尝试需找匹配，每次检查字符串的一个字符，要使一个量词成为懒惰的，必须在普通量词后添加一个问号(?).</li>
+<li>占有量词会覆盖整个目标然后尝试寻找匹配内容，但它只尝试一次，不会回溯。在普通量词之后添加一个加号(+)。<br>例子：</li>
+<li>懒惰 对于 7? 会匹配0个或1和7，而 7??或者7? 则不会匹配任何内容,7+?或者 7{1,7}则只匹配一个7 。</li>
+<li>占有 7.+会匹配所有的7(Match All),而.*+7则什么都不会匹配，原因就在于没有回溯。</li>
+</ul>
+<h2 id="环视-也称零宽度断言"><a href="#环视-也称零宽度断言" class="headerlink" title="环视(也称零宽度断言)"></a>环视(也称零宽度断言)</h2><ul>
+<li>正前瞻<br>正前瞻(?i)lucky (?=dog)表示每一行中寻找后跟dog的单词lucky，但只有模式的第一部分被标亮。环视模式不会标亮。</li>
+<li>反前瞻<br>反前瞻意味着要匹配某个模式时，需要在它后面找不到含有给定前瞻模式的内容，形式是： (?i)lucky (?!dog)</li>
+<li>正后顾<br>正后顾会查看左边的内容，与正前瞻相反，语法是: (?i)(?&lt;=lucky) dog ,会标亮左边有lucky的dog</li>
+<li>反后顾<br>反后顾语法为：(?i)(?&lt;!lucky) dog 会查看左边没有lucky的dog 。</li>
+</ul>
 <p>扩展阅读：</p>
 <ul>
-<li><a href="https://hexo.io/zh-cn/docs/tag-plugins.html" target="_blank" rel="external">Hexo 官方文档</a></li>
-<li><a href="http://www.zhihu.com/question/21981094" target="_blank" rel="external">FarBox、Jekyll、Octopress、ghost、marboo、Hexo···这些博客程序有什么特点？ 知乎</a></li>
-<li><a href="http://www.zhihu.com/question/19996679" target="_blank" rel="external">用 Jekyll 和 Octopress 搭建博客，哪个更合适？ 知乎</a></li>
-<li><a href="http://zespia.tw/blog/2012/10/11/hexo-debut/" target="_blank" rel="external">Hexo 颯爽登場！tommy351</a></li>
-<li><a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="external">hexo你的博客 不如</a></li>
-<li><a href="http://jiyinyiyong.blog.163.com/blog/static/64699876201111291856363/" target="_blank" rel="external">尝试 Jekyll 博客 各种资料</a></li>
-<li><a href="https://www.zybuluo.com/mdeditor" target="_blank" rel="external">作业部落 在线编辑器</a></li>
-<li><a href="http://wowubuntu.com/markdown/" target="_blank" rel="external">Markdown 语法说明 文档</a></li>
+<li><a href="http://wuchong.me/blog/2014/07/02/learn-regular-expressions/" target="_blank" rel="external">正则表达式学习 Jark’s Blog</a></li>
+<li><a href="http://www.amazon.cn/%E5%AD%A6%E4%B9%A0%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E8%8F%B2%E8%8C%A8%E6%9D%B0%E6%8B%89%E5%BE%B7/dp/B00C8ONKK8/ref=sr_1_1?ie=UTF8&amp;qid=1410516622&amp;sr=8-1&amp;keywords=%E5%AD%A6%E4%B9%A0%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F" target="_blank" rel="external">学习正则表达式 Amazon</a></li>
 </ul>
 
       
@@ -493,7 +510,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://yuanzhe.me/2014/07/20/comparison-of-diffrent-blog-frameworks/" title="WordPress 和 Hexo 等不同博客框架的比较">https://yuanzhe.me/2014/07/20/comparison-of-diffrent-blog-frameworks/</a>
+    <a href="https://yuanzhe.me/2014/09/01/learning-regular-expression/" title="学习正则表达式">https://yuanzhe.me/2014/09/01/learning-regular-expression/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -508,9 +525,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
-            <a href="/tags/Blog/" rel="tag"># Blog</a>
+            <a href="/tags/RegEx/" rel="tag"># RegEx</a>
           
         </div>
       
@@ -523,14 +540,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2014/08/02/error-when-deploy-hexo-to-gitcafe/" rel="next" title="部署 Hexo 博客到 Gitcafe 出错及总结">
+                <i class="fa fa-chevron-left"></i> 部署 Hexo 博客到 Gitcafe 出错及总结
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2014/07/23/install-KBS-in-CentOS/" rel="prev" title="在 CentOS 上安装 KBS">
-                在 CentOS 上安装 KBS <i class="fa fa-chevron-right"></i>
+              <a href="/2015/02/12/phonemes-and-its-pronounciation-rules-in-French/" rel="prev" title="法语音素及其读音规则">
+                法语音素及其读音规则 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -728,7 +749,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Wordpress"><span class="nav-number">1.</span> <span class="nav-text">Wordpress</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HPSTR"><span class="nav-number">2.</span> <span class="nav-text">HPSTR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Octopress"><span class="nav-number">3.</span> <span class="nav-text">Octopress</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo"><span class="nav-number">4.</span> <span class="nav-text">Hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单模式匹配-匹配数字-字符串，空白符和边界等"><span class="nav-number">1.</span> <span class="nav-text">简单模式匹配(匹配数字,字符串，空白符和边界等)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择分组和后向引用"><span class="nav-number">2.</span> <span class="nav-text">选择分组和后向引用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#选项"><span class="nav-number">2.1.</span> <span class="nav-text">选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子模式-subpattern-，多数情况指的是分组中的一个或多个分组"><span class="nav-number">2.2.</span> <span class="nav-text">子模式(subpattern)，多数情况指的是分组中的一个或多个分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#捕获分组和后向引用"><span class="nav-number">2.3.</span> <span class="nav-text">捕获分组和后向引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非捕获分组-Non-Capturing-Group"><span class="nav-number">2.4.</span> <span class="nav-text">非捕获分组(Non-Capturing Group).</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符组-有时也被成为方括号表达式"><span class="nav-number">3.</span> <span class="nav-text">字符组(有时也被成为方括号表达式)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#量词"><span class="nav-number">4.</span> <span class="nav-text">量词</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#贪心、懒惰和占有"><span class="nav-number">4.1.</span> <span class="nav-text">贪心、懒惰和占有</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环视-也称零宽度断言"><span class="nav-number">5.</span> <span class="nav-text">环视(也称零宽度断言)</span></a></li></ol></div>
             
 
           </div>

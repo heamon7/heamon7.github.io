@@ -60,7 +60,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo,Blog," />
+  <meta name="keywords" content="Linux,BBS," />
 
 
 
@@ -76,18 +76,20 @@
 
 
 
-<meta name="description" content="个人接触技术比较晚，认识博客还只是始于大一上学期末与 CSDN 的偶遇，之后平时学习之中，感觉遇到技术上问题时，很多时候解决办法都是得益于 Google 到某篇博客，比如 CSDN，cnblogs，以及一些独立博客。后来也断断续续在 CSDN 上写过几遍文章，但很遗憾没能持续下去。再后来接触独立博客久了，加之好奇心的驱动，决定自己折腾出一个独立博客。本篇文章先比较一下独立博客与像 CSDN 这样的">
-<meta name="keywords" content="Hexo,Blog">
+<meta name="description" content="为了学习北邮人论坛的 nForum 系统，我们需要先学会搭建 KBS。 什么是KBSKBS 是一个高性能的，稳定的，基于 telnet、SSH 和 Web 界面的电子公告牌系统，全称为The K Board System。支持多种如 Linux、FreeBSD、Solaris、Windows (需要Cygwin)操作系统: 安装环境由于分别安装Apache+PHP+MySQL比较复杂，而且难以管理">
+<meta name="keywords" content="Linux,BBS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="WordPress 和 Hexo 等不同博客框架的比较">
-<meta property="og:url" content="https://yuanzhe.me/2014/07/20/comparison-of-diffrent-blog-frameworks/index.html">
+<meta property="og:title" content="在 CentOS 上安装 KBS">
+<meta property="og:url" content="https://yuanzhe.me/2014/07/23/install-KBS-in-CentOS/index.html">
 <meta property="og:site_name" content="7utopia">
-<meta property="og:description" content="个人接触技术比较晚，认识博客还只是始于大一上学期末与 CSDN 的偶遇，之后平时学习之中，感觉遇到技术上问题时，很多时候解决办法都是得益于 Google 到某篇博客，比如 CSDN，cnblogs，以及一些独立博客。后来也断断续续在 CSDN 上写过几遍文章，但很遗憾没能持续下去。再后来接触独立博客久了，加之好奇心的驱动，决定自己折腾出一个独立博客。本篇文章先比较一下独立博客与像 CSDN 这样的">
+<meta property="og:description" content="为了学习北邮人论坛的 nForum 系统，我们需要先学会搭建 KBS。 什么是KBSKBS 是一个高性能的，稳定的，基于 telnet、SSH 和 Web 界面的电子公告牌系统，全称为The K Board System。支持多种如 Linux、FreeBSD、Solaris、Windows (需要Cygwin)操作系统: 安装环境由于分别安装Apache+PHP+MySQL比较复杂，而且难以管理">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-05T08:40:39.000Z">
+<meta property="og:image" content="http://picture-repository-of-heamon7.qiniudn.com/img/png/KBS.png">
+<meta property="og:updated_time" content="2017-10-05T09:26:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WordPress 和 Hexo 等不同博客框架的比较">
-<meta name="twitter:description" content="个人接触技术比较晚，认识博客还只是始于大一上学期末与 CSDN 的偶遇，之后平时学习之中，感觉遇到技术上问题时，很多时候解决办法都是得益于 Google 到某篇博客，比如 CSDN，cnblogs，以及一些独立博客。后来也断断续续在 CSDN 上写过几遍文章，但很遗憾没能持续下去。再后来接触独立博客久了，加之好奇心的驱动，决定自己折腾出一个独立博客。本篇文章先比较一下独立博客与像 CSDN 这样的">
+<meta name="twitter:title" content="在 CentOS 上安装 KBS">
+<meta name="twitter:description" content="为了学习北邮人论坛的 nForum 系统，我们需要先学会搭建 KBS。 什么是KBSKBS 是一个高性能的，稳定的，基于 telnet、SSH 和 Web 界面的电子公告牌系统，全称为The K Board System。支持多种如 Linux、FreeBSD、Solaris、Windows (需要Cygwin)操作系统: 安装环境由于分别安装Apache+PHP+MySQL比较复杂，而且难以管理">
+<meta name="twitter:image" content="http://picture-repository-of-heamon7.qiniudn.com/img/png/KBS.png">
 
 
 
@@ -117,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="https://yuanzhe.me/2014/07/20/comparison-of-diffrent-blog-frameworks/"/>
+  <link rel="canonical" href="https://yuanzhe.me/2014/07/23/install-KBS-in-CentOS/"/>
 
 
 
 
 
-  <title>WordPress 和 Hexo 等不同博客框架的比较 | 7utopia</title>
+  <title>在 CentOS 上安装 KBS | 7utopia</title>
   
 
 
@@ -317,7 +319,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yuanzhe.me/2014/07/20/comparison-of-diffrent-blog-frameworks/">
+    <link itemprop="mainEntityOfPage" href="https://yuanzhe.me/2014/07/23/install-KBS-in-CentOS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yuan Zhe">
@@ -334,7 +336,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">WordPress 和 Hexo 等不同博客框架的比较</h1>
+          <h1 class="post-title" itemprop="name headline">在 CentOS 上安装 KBS</h1>
         
 
         <div class="post-meta">
@@ -346,8 +348,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-07-20T00:00:00+08:00">
-                2014-07-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-07-23T00:00:00+08:00">
+                2014-07-23
               </time>
             
 
@@ -369,8 +371,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Logging/" itemprop="url" rel="index">
-                    <span itemprop="name">Logging</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -386,7 +388,7 @@
 
           
           
-             <span id="/2014/07/20/comparison-of-diffrent-blog-frameworks/" class="leancloud_visitors" data-flag-title="WordPress 和 Hexo 等不同博客框架的比较">
+             <span id="/2014/07/23/install-KBS-in-CentOS/" class="leancloud_visitors" data-flag-title="在 CentOS 上安装 KBS">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -448,30 +450,70 @@
       
 
       
-        <p>个人接触技术比较晚，认识博客还只是始于大一上学期末与 CSDN 的偶遇，之后平时学习之中，感觉遇到技术上问题时，很多时候解决办法都是得益于 Google 到某篇博客，比如 CSDN，cnblogs，以及一些独立博客。<br>后来也断断续续在 CSDN 上写过几遍文章，但很遗憾没能持续下去。再后来接触独立博客久了，加之好奇心的驱动，决定自己折腾出一个独立博客。<br>本篇文章先比较一下独立博客与像 CSDN 这样的 BSP 平台的写作的区别。对于像我这样的伪 geek 来说，毫无疑问是很重视对生活的自主控制权，自由永远是任何东西都无法替代的，在自己的博客里，你永远可以定制你自己的生活，而不用忍受那扫兴的广告等条条框框，还不用担心苦心经营的博客，随随便便就被天朝的审核制度封掉。虽说自建博客的访问量可能早期会很少（记得当时在 CSDN 的几篇博客几天就有近千人的访问量），但是仔细想想，我们写博客的最终意义并不是扩大自己的社交圈，而是个人知识与修养的沉淀，也许这本来就需要一个相对安静的环境，即使社交，我们需要的也仅仅是有质量的社交圈，希望遇到的是懂我们的人，另外就是建立自己的品牌，看你的博客就大概可以了解你是怎样的一个人，再有就是花时间做自己喜欢的事情，一定会认真的做好。<br>这里首先推荐几篇觉得不错的文章：</p>
-<blockquote>
+        <p>为了学习北邮人论坛的 <a href="https://github.com/xw2423/nForum" target="_blank" rel="external">nForum</a> 系统，我们需要先学会搭建 <a href="https://github.com/zhouqt/kbs" target="_blank" rel="external">KBS</a>。</p>
+<h2 id="什么是KBS"><a href="#什么是KBS" class="headerlink" title="什么是KBS"></a>什么是KBS</h2><p>KBS 是一个高性能的，稳定的，基于 telnet、SSH 和 Web 界面的电子公告牌系统，全称为The K Board System。支持多种如 Linux、FreeBSD、Solaris、Windows (需要Cygwin)操作系统:</p>
+<h2 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h2><p>由于分别安装Apache+PHP+MySQL比较复杂，而且难以管理，个人开发一直习惯使用XAMPP，所以这里是基于XAMPP来安装的，下面开始,注意以下一直都是以管理员身份运行。</p>
+<h3 id="安装XAMPP"><a href="#安装XAMPP" class="headerlink" title="安装XAMPP"></a>安装XAMPP</h3><p>这里很简单，直接去 XAMPP 官网下载，然后进入 Linux 安装帮助界面按照提示一步步安装就 OK 了，此时我安装的版本是 XAMPP for Linux v1.8.3(PHP5.5.11)。默认应该是安装在 <code>/opt/lampp/</code> 目录下，可以按照官网提示的方法本机测试一下 Apache。</p>
+<h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><p>安装 autoconf,automake,libtool</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install autoconf automake libtool</div></pre></td></tr></table></figure>
+<p>由于我们已经安装了XAMPP，不需要再安装 PHP,httpd,MySQL 了，不过为了保险我们还是可以同时也安装的，yum 会自动忽略已经安装好的部分,下面我们带上以上三个，yum 安装 php-devel php-gd php-xml zlib-devel openssl-devel gmp-devel gd libesmtp-devel</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install httpd php php-devel  php-gd   php-xml  zlib-devel  openssl-devel gmp-devel  gd  libesmtp-devel mysql  mysql-devel mysql-server  php-mysql</div></pre></td></tr></table></figure>
+<h3 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h3><p>创建bbs用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">adduser bbs</div></pre></td></tr></table></figure>
+<p>修改Apache配置文件 /opt/lampp/etc/httpd.conf</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /opt/lampp/etc/httpd.conf</div></pre></td></tr></table></figure>
+<p>找到 User 和 Group 处，分别修改为 bbs</p>
+<p>以 SVN 方式下载 kbsbbs 的源代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /home/bbs/</div><div class="line">svn co http://svn.kcn.cn/repos/kbs/trunk/kbs_bbs</div></pre></td></tr></table></figure>
+<p>此时开始下载一大串的源代码，代表正常结束</p>
+<p>修改 KBS 的 uid 和 gid<br>先查看 bbs 用户的 gid 和 uid 是多少</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id bbs</div></pre></td></tr></table></figure>
+<p>然后我们进入 <code>/home/bbs/kbs_bbs/site</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /home/bbs/kbs_bbs/site</div><div class="line">ls</div></pre></td></tr></table></figure>
+<p>ls后，我们会看到有 <code>fb2k-v2.h</code> 和 <code>fb2k-v2.c</code> 两个文件，这里我们默认使用这两份文件来搭建我们的站点，下面分别修改 <code>fb2k-v2.h</code> 和 <code>fb2k-v2.c</code> 的 <code>BBSUID</code> 和 <code>BBSGID</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">vim fb2k-v2.h</div><div class="line">vim fb2k-v2.c</div><div class="line">``</div><div class="line">另外，如果 后期想要继续安装nForum，建议在此处的 `fb2k-v2.h` 中添加以下 nForum 所需的宏定义，建议添加，方便以后扩展</div><div class="line"></div><div class="line">```bash</div><div class="line"><span class="comment">#define NFORUM 1</span></div><div class="line"><span class="comment">#define ENABLE_REFER 1</span></div><div class="line"><span class="comment">#define RECORDMAXONLINE</span></div><div class="line"><span class="comment">#define TITLEKEYWORD</span></div><div class="line"><span class="comment">#define MAXTITLEKEY 18</span></div><div class="line"><span class="comment">#define MAXBOARDTITLEKEY 10</span></div></pre></td></tr></table></figure>
+<p>运行 <code>autogen.sh</code> 命令</p>
+<p>分别到 <code>/home/bbs/kbs_bbs</code> 和 <code>/home/bbs/kbs_bbs/sshbbsd</code> 下运行 <code>autogen.sh</code> 命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /home/bbs/src/kbs_bbs</div><div class="line">./autogen.sh</div><div class="line"><span class="built_in">cd</span> sshbbsd</div><div class="line">./autogen.sh</div></pre></td></tr></table></figure>
+<h3 id="开始编译安装kbs"><a href="#开始编译安装kbs" class="headerlink" title="开始编译安装kbs"></a>开始编译安装kbs</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /home/bbs/src/kbs_bbs</div><div class="line">./configure --prefix=/home/bbs --<span class="built_in">enable</span>-site=fb2k-v2 --with-php --with-mysql=/opt/lampp/mysql --<span class="built_in">enable</span>-ssh --<span class="built_in">enable</span>-ssl --with-openssl=/usr --with-libesmtp --<span class="built_in">enable</span>-innbbsd CFLAGS=<span class="string">"-O3 -g"</span></div></pre></td></tr></table></figure>
+<p>注意，这里补充一些常用 configure 参数说明。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">--enable-site=SITE      告诉 kbsbbs 采用名为 SITE.h 和 SITE.c 的站</div><div class="line">                        点定制文件，这两个文件必须放在 site/ 目录</div><div class="line">--with-mysql[=DIR]      让 kbsbbs 支持 mysql，DIR 为 mysql 库文件</div><div class="line">                        所在目录，如果不指明则自动检测</div><div class="line">--without-mysql         不让 kbsbbs 支持 mysql</div><div class="line">--with-libesmtp[=DIR]   让 kbsbbs 支持 libesmtp，DIR 为 libesmtp 库</div><div class="line">                        文件所在目录，如果不指明则自动检测</div><div class="line">--without-libesmtp      不让 kbsbbs 支持 libesmtp</div><div class="line">--with-www=DIR          设定 kbsbbs web 子系统的安装目录，要求 DIR</div><div class="line">                        目录下存在名为 html 或 htdocs 的子目录</div><div class="line">--with-php[=DIR]        让 kbsbbs 找到 php 头文件所在目录，如果不</div><div class="line">                        指明 DIR 则自动检测</div></pre></td></tr></table></figure>
+<p>其中 <code>/home/bbs</code> 赋值给了站点设置所需的 <code>$BBSHOME</code> 变量，而 <code>fb2k-v2</code> 则是使用了刚才默认的站点名。然后就可以安装了，这是一个有点漫长的过程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">make        </div><div class="line">make install</div></pre></td></tr></table></figure>
+<p>由于此处由于是新建的 bbs 站点，还需要安装默认的站点文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make install-home</div></pre></td></tr></table></figure>
+<p>注意今后修改代码编译后只需要执行 <code>make install</code>。<code>make install-home</code> 只需要<br>首次安装的时候执行，以后再执行将会覆盖掉之前 BBS 的所有数据！</p>
+<p>为 <code>sshbbsd</code> 生成秘钥</p>
+<p>即设置 <code>ssh_host_key</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /home/bbs/etc</div><div class="line">touch sshd_config</div><div class="line">ssh-keygen -t rsa1 -f ssh_host_key</div></pre></td></tr></table></figure>
+<p>这里提示我们输入口令时，我们默认为空，即双击 enter</p>
+<p>修改 bbs 文件夹的属性</p>
+<p>由于之前很多操作都是用 root 执行，可能 bbs 下很多文件的 owner 和 group 不一致，我们一并修改之</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown -R bbs:bbs /home/bbs</div></pre></td></tr></table></figure>
+<h3 id="启动bbs"><a href="#启动bbs" class="headerlink" title="启动bbs"></a>启动bbs</h3><p>最后我们就可以启动我们本机上的 bbs 了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /home/bbs/bin</div><div class="line">./miscd daemon</div><div class="line">./bbslogd</div><div class="line">./bbsd -p 23</div><div class="line">./sshbbsd -p 22</div><div class="line"><span class="built_in">cd</span> /opt/lampp/bin</div><div class="line">./apachectl start</div></pre></td></tr></table></figure>
+<p>然后telnet登陆本机</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">telnet 127.0.0.1</div></pre></td></tr></table></figure>
+<p>不出意外应该可以看到一下画面：<br><img src="http://picture-repository-of-heamon7.qiniudn.com/img/png/KBS.png" alt=""></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>写本篇博客时是第二次安装，仍发现几个问题，在此一并说明</p>
 <ul>
-<li><a href="http://www.suyuzishi.net/personal-blog-no-return/" target="_blank" rel="external">独立博客不归路-苏于子时</a></li>
-<li><a href="http://mindhacks.cn/2009/02/15/why-you-should-start-blogging-now/" target="_blank" rel="external">为什么你应该写博客-刘未鹏</a></li>
-<li><a href="http://www.zhihu.com/question/19916345" target="_blank" rel="external">为什么要自建博客?-知乎</a></li>
+<li>由于这里使用的是XAMPP，如果你是分别安装的Apache等，在1.4和1.11中，你的httpd.conf文件和apachectl文件路径可能和这里不一样，请搜索到自己Apache的安装路径，并执行。</li>
+<li>在1.11中启动bbs时，执行./miscd daemon命令时,可能遇到BUS error提示，此时重复执行一遍./miscd daemon命令即可。</li>
+<li>在1.11中执行./apachectl start命令时，可能报Adress already in use···的错误，此时说明默认的80端口被占用，可以使用netatat -lnp|grep 80命令查看被哪个进程占用，然后kill -pid结束进程，但是这里我试了试，好像是不管用的，说明应该是个僵尸进程，我们可以使用killall httpd杀死该进程，参数是进程名，这个应该就是httpd进程，然后我们再使用netatat -lnp|grep 80，应该80端口已经被释放了，然后使用/opt/lampp/lampp start,如果显示了Starting Apache…ok，则可以再使用./apachectl start命令，此时应该是ok的了。</li>
+<li>使用telnet登陆时，首先确保自己安装了telnet服务，如果你是将CentOS装在了虚拟机内，也可以从主机登陆，先确保windows开启了telnet登陆功能，然后在虚拟机中，先解决XAMPP外部访问受限问题，然后关闭CentOS防火墙(iptables stop),就可以从外部输入虚拟机的iptelnet登陆了。</li>
 </ul>
-</blockquote>
-<p>好了，废话说了这么多，是该进入正题了。决定自建博客后，一一尝试了Wordpress，以及基于 <a href="http://baike.baidu.com/view/7878719.htm" target="_blank" rel="external">Jekyll</a> 的 HPSTR，Octopress和Hexo，</p>
-<h2 id="Wordpress"><a href="#Wordpress" class="headerlink" title="Wordpress"></a>Wordpress</h2><p>感觉 <a href="http://baike.baidu.com/view/23618.htm" target="_blank" rel="external">Wordpress</a>过于臃肿，需要自己管理数据库，管理空间等，很是麻烦。</p>
-<h2 id="HPSTR"><a href="#HPSTR" class="headerlink" title="HPSTR"></a>HPSTR</h2><p>然后就是基于Jekyll的HPSTR主题，了解到这个还是看了 <a href="http://www.dss886.com/github/2014/05/05/03/" target="_blank" rel="external">ds886 学长的文章</a>，他用的就是 HPSTR主题，试了之后，感觉界面应该算是最简洁，明快，优雅的了，但是就是有点过了，感觉左上方的菜单对于读者并不够友好，而且发现这个主题的中文参考资料并不是很多，担心之后遇到问题不好解决。</p>
-<h2 id="Octopress"><a href="#Octopress" class="headerlink" title="Octopress"></a>Octopress</h2><p>于是毫不犹豫的转向Octopress，参考了 <a href="http://cn.soulmachine.me/blog/20130401/" target="_blank" rel="external">灵魂机器的文章</a> 在不到半小时内，顺利的在 Github上访问到了自己的 Octopress 博客，第一感觉就是默认主题真不怎么样，太“黑”客了，虽说安装很快，但是深感发布一篇文章步骤之繁杂，而且了解到一旦后期文章多了起来之后，每次编译时间都需要很久。</p>
-<h2 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h2><p>当时对 Node.js 比较感兴趣，最后就准备试试 Hexo，Google 了一下，发现很多基于 Hexo 框架的文章，而且 Hexo 的作者又是中国台湾的，于是好感大增，参考 <a href="http://zipperary.com/categories/hexo/" target="_blank" rel="external">Zipperary</a> 以及 <a href="http://yangjian.me/workspace/building-blog-with-hexo/" target="_blank" rel="external">Aliman</a> 的文章，又有了前面的基础，这次就更快建好了，唯一遇到的一个问题就是 <a href="http://nodejs.org/download/" target="_blank" rel="external">安装node</a> 时，建议不要选二进制的 .exe 安装，而选 .msi 的安装包安装，试试就知道的。发现安装过程还算比较简单的。更重要的是，发布一篇文章的命令实在是太简单了，只有 n-g-(s)-d 几步。看了看默认主题，感觉也不错，而且 Github 上可选的主题也很多，最后是看到 <a href="http://yangjian.me/pacman/" target="_blank" rel="external">Pacman风格</a>，应有的功能都有，也比较简洁，扁平化，响应式布局的体验很是不错，就选定了一个优化版的 <a href="http://wuchong.me/blog/2014/01/25/change-to-pacman/" target="_blank" rel="external">Jackman</a>，希望后期也能够自己小小优化一下，完全符合自己的风格。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>好了，最后总结一下:<br>如果你只是想记录记录生活和感悟，纯粹的写作，那么选一个 CSDN 或者简书这样的 BSP 平台写博客还是不错的；如果你不是很想了解 Ruby，Nodejs 这样的语言，但又想拥有自己的独立博客而且不介意 Wordpress 的臃肿，它也是一个不错的选择，毕竟这个的使用群体还是相当大的；如果你有洁癖，对界面要求极简，建议试试 HPSTR；如果想顺便学习 Ruby，请选择 Octopress，如果你和我一样，对 Nodejs 感兴趣，而且对速度有极致追求，对界面有要求但不挑剔，喜欢折腾就选择 Hexo 吧。<br>最后祝大家都能找到一个自己喜欢的记录生活的方式，若干年后，你一定会感谢现在的你！<br>大家有什么问题也可以找我交流哦！<br><strong>Let’s share ,Let’s play !</strong></p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>这是本次参加Byr Team培训过程的一个小结，最后项目是基于nForum论坛源代码，在首页添加一个图片轮播的widget，虽然其中遇到很多困难，但最后总算还是完成了任务，也收获了很多，希望有时间也能总结一下期间的感悟，也希望以后有机会再写一遍关于nForum安装的文章。最后加上自己项目的一段录屏作纪念。</p>
+<video id="sampleMovie" src="http://video-repository-of-7heamon7.qiniudn.com/mp4/byr.mp4" controls preload="" poster="http://picture-repository-of-heamon7.qiniudn.com/img/png/thumnailbyr.png"></video>
+
+
 <p>扩展阅读：</p>
 <ul>
-<li><a href="https://hexo.io/zh-cn/docs/tag-plugins.html" target="_blank" rel="external">Hexo 官方文档</a></li>
-<li><a href="http://www.zhihu.com/question/21981094" target="_blank" rel="external">FarBox、Jekyll、Octopress、ghost、marboo、Hexo···这些博客程序有什么特点？ 知乎</a></li>
-<li><a href="http://www.zhihu.com/question/19996679" target="_blank" rel="external">用 Jekyll 和 Octopress 搭建博客，哪个更合适？ 知乎</a></li>
-<li><a href="http://zespia.tw/blog/2012/10/11/hexo-debut/" target="_blank" rel="external">Hexo 颯爽登場！tommy351</a></li>
-<li><a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="external">hexo你的博客 不如</a></li>
-<li><a href="http://jiyinyiyong.blog.163.com/blog/static/64699876201111291856363/" target="_blank" rel="external">尝试 Jekyll 博客 各种资料</a></li>
-<li><a href="https://www.zybuluo.com/mdeditor" target="_blank" rel="external">作业部落 在线编辑器</a></li>
-<li><a href="http://wowubuntu.com/markdown/" target="_blank" rel="external">Markdown 语法说明 文档</a></li>
+<li><a href="http://www.2cto.com/os/201303/198570.html" target="_blank" rel="external">Centos下安装SVN服务</a></li>
+<li><a href="http://trac.kcn.cn/kbs/browser/trunk/kbs_bbs/doc/INSTALL.redhat" target="_blank" rel="external">kbsbbs在Fedora 8上的安装指南</a></li>
+<li><a href="http://blog.yousri.org/2009/05/16/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E5%9F%BA%E4%BA%8Ekbs%E7%A8%8B%E5%BA%8F%E7%9A%84bbs%E7%B3%BB%E7%BB%9F.html" target="_blank" rel="external">安装配置基于KBS程序的BBS系统</a></li>
+<li><a href="http://blog.sina.com.cn/s/blog_58182ced0100v7ql.html" target="_blank" rel="external">KBS 在 ylmf3(ubuntu) 下的安装方法</a></li>
+<li><a href="https://github.com/xw2423/nForum/wiki/nForum-2.0-Install" target="_blank" rel="external">nForum 2.0 Install </a></li>
+<li><a href="http://tiger506.blog.51cto.com/318536/385344" target="_blank" rel="external">Centos启用telnet服务</a></li>
 </ul>
 
       
@@ -493,7 +535,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://yuanzhe.me/2014/07/20/comparison-of-diffrent-blog-frameworks/" title="WordPress 和 Hexo 等不同博客框架的比较">https://yuanzhe.me/2014/07/20/comparison-of-diffrent-blog-frameworks/</a>
+    <a href="https://yuanzhe.me/2014/07/23/install-KBS-in-CentOS/" title="在 CentOS 上安装 KBS">https://yuanzhe.me/2014/07/23/install-KBS-in-CentOS/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -508,9 +550,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
-            <a href="/tags/Blog/" rel="tag"># Blog</a>
+            <a href="/tags/BBS/" rel="tag"># BBS</a>
           
         </div>
       
@@ -523,14 +565,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2014/07/20/comparison-of-diffrent-blog-frameworks/" rel="next" title="WordPress 和 Hexo 等不同博客框架的比较">
+                <i class="fa fa-chevron-left"></i> WordPress 和 Hexo 等不同博客框架的比较
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2014/07/23/install-KBS-in-CentOS/" rel="prev" title="在 CentOS 上安装 KBS">
-                在 CentOS 上安装 KBS <i class="fa fa-chevron-right"></i>
+              <a href="/2014/08/02/error-when-deploy-hexo-to-gitcafe/" rel="prev" title="部署 Hexo 博客到 Gitcafe 出错及总结">
+                部署 Hexo 博客到 Gitcafe 出错及总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -728,7 +774,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Wordpress"><span class="nav-number">1.</span> <span class="nav-text">Wordpress</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HPSTR"><span class="nav-number">2.</span> <span class="nav-text">HPSTR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Octopress"><span class="nav-number">3.</span> <span class="nav-text">Octopress</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo"><span class="nav-number">4.</span> <span class="nav-text">Hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是KBS"><span class="nav-number">1.</span> <span class="nav-text">什么是KBS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装环境"><span class="nav-number">2.</span> <span class="nav-text">安装环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装XAMPP"><span class="nav-number">2.1.</span> <span class="nav-text">安装XAMPP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装依赖"><span class="nav-number">2.2.</span> <span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改配置"><span class="nav-number">2.3.</span> <span class="nav-text">修改配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开始编译安装kbs"><span class="nav-number">2.4.</span> <span class="nav-text">开始编译安装kbs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动bbs"><span class="nav-number">2.5.</span> <span class="nav-text">启动bbs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">3.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束语"><span class="nav-number">4.</span> <span class="nav-text">结束语</span></a></li></ol></div>
             
 
           </div>
