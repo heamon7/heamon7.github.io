@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Sort," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="前言这里用Python实现了七大经典排序算法，并且用图示说明了排序过程， 首先对比一下七种经典排序算法指标：  一、冒泡排序 BubbleSort介绍： 冒泡排序的原理非常简单，它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。 步骤：  比较相邻的元素。如果第一个比第二个大，就交换他们两个。 对第0个到第n-1个数据做同样的工作。这时，最大的数就“浮”到了数组最后">
+<meta name="keywords" content="Sort">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见排序算法总结">
+<meta property="og:url" content="https://yuanzhe.me/2017/10/21/common-sort-algorithms-summary/index.html">
+<meta property="og:site_name" content="7utopia">
+<meta property="og:description" content="前言这里用Python实现了七大经典排序算法，并且用图示说明了排序过程， 首先对比一下七种经典排序算法指标：  一、冒泡排序 BubbleSort介绍： 冒泡排序的原理非常简单，它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。 步骤：  比较相邻的元素。如果第一个比第二个大，就交换他们两个。 对第0个到第n-1个数据做同样的工作。这时，最大的数就“浮”到了数组最后">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.ooxx.ooo/2017/10/21/464b5e7fa6a5adc2218201cfec759919.jpg">
+<meta property="og:updated_time" content="2017-10-21T03:54:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常见排序算法总结">
+<meta name="twitter:description" content="前言这里用Python实现了七大经典排序算法，并且用图示说明了排序过程， 首先对比一下七种经典排序算法指标：  一、冒泡排序 BubbleSort介绍： 冒泡排序的原理非常简单，它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。 步骤：  比较相邻的元素。如果第一个比第二个大，就交换他们两个。 对第0个到第n-1个数据做同样的工作。这时，最大的数就“浮”到了数组最后">
+<meta name="twitter:image" content="https://i.ooxx.ooo/2017/10/21/464b5e7fa6a5adc2218201cfec759919.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yuanzhe.me/2017/10/21/common-sort-algorithms-summary/"/>
+
+
+
+
+
+  <title>常见排序算法总结 | 7utopia</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-107343010-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?741145baa6ea7b6e1f7a3fe96eb6e884";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">7utopia</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">思危、思退、思变</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resume">
+          <a href="/resume/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            简历
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yuanzhe.me/2017/10/21/common-sort-algorithms-summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yuan Zhe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/heamon7.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="7utopia">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">常见排序算法总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-21T11:36:11+08:00">
+                2017-10-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">Algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/10/21/common-sort-algorithms-summary/" class="leancloud_visitors" data-flag-title="常见排序算法总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这里用Python实现了七大经典排序算法，并且用图示说明了排序过程，</p>
+<p>首先对比一下七种经典排序算法指标：</p>
+<p><img src="https://i.ooxx.ooo/2017/10/21/464b5e7fa6a5adc2218201cfec759919.jpg" alt="各种排序性能指标对比"></p>
+<h2 id="一、冒泡排序-BubbleSort"><a href="#一、冒泡排序-BubbleSort" class="headerlink" title="一、冒泡排序 BubbleSort"></a>一、冒泡排序 BubbleSort</h2><p><strong>介绍：</strong></p>
+<p>冒泡排序的原理非常简单，它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。</p>
+<p><strong>步骤：</strong></p>
+<ul>
+<li>比较相邻的元素。如果第一个比第二个大，就交换他们两个。</li>
+<li>对第0个到第n-1个数据做同样的工作。这时，最大的数就“浮”到了数组最后的位置上。</li>
+<li>针对所有的元素重复以上的步骤，除了最后一个。</li>
+<li>持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。<br><strong>源代码：(python实现)</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">def bubble_sort(arry):</div><div class="line">    n = len(arry)                   #获得数组的长度</div><div class="line">    for i in range(n):</div><div class="line">        for j in range(1,n-i):</div><div class="line">            if  arry[j-1] &gt; arry[j] :       #如果前者比后者大</div><div class="line">                arry[j-1],arry[j] = arry[j],arry[j-1]      #则交换两者</div><div class="line">    return arry</div><div class="line">```    </div><div class="line">不过针对上述代码还有两种优化方案。</div><div class="line"></div><div class="line">- 优化1：某一趟遍历如果没有数据交换，则说明已经排好序了，因此不用再进行迭代了。用一个标记记录这个状态即可。</div><div class="line">- 优化2：记录某次遍历时最后发生数据交换的位置，这个位置之后的数据显然已经有序，不用再排序了。因此通过记录最后发生数据交换的位置就可以确定下次循环的范围了。</div><div class="line"></div><div class="line"></div><div class="line">## 二、选择排序 SelectionSort</div><div class="line">**介绍：**</div><div class="line"></div><div class="line">选择排序无疑是最简单直观的排序。它的工作原理如下。</div><div class="line"></div><div class="line">**步骤：**</div><div class="line"></div><div class="line">- 在未排序序列中找到最小（大）元素，存放到排序序列的起始位置。</div><div class="line">- 再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。</div><div class="line">- 以此类推，直到所有元素均排序完毕。</div><div class="line">**源代码：(python实现)**</div></pre></td></tr></table></figure>
+<p>def select_sort(ary):<br>    n = len(ary)<br>    for i in range(0,n):<br>        min = i                             #最小元素下标标记<br>        for j in range(i+1,n):<br>            if ary[j] &lt; ary[min] :<br>                min = j                     #找到最小值的下标<br>        ary[min],ary[i] = ary[i],ary[min]   #交换两者<br>    return ary<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">## 三、插入排序 InsertionSort</div><div class="line">**介绍：**</div><div class="line"></div><div class="line">插入排序的工作原理是，对于每个未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。</div><div class="line"></div><div class="line">**步骤：**</div><div class="line"></div><div class="line">- 从第一个元素开始，该元素可以认为已经被排序</div><div class="line">- 取出下一个元素，在已经排序的元素序列中从后向前扫描</div><div class="line">- 如果被扫描的元素（已排序）大于新元素，将该元素后移一位</div><div class="line">- 重复步骤3，直到找到已排序的元素小于或者等于新元素的位置</div><div class="line">- 将新元素插入到该位置后</div><div class="line">- 重复步骤2~5</div><div class="line"></div><div class="line">**图示：**</div><div class="line">![插入排序图示](https://i.ooxx.ooo/2017/10/21/ba2a69d155a464db2f731766d57b178b.png)</div><div class="line">**源代码：(python实现)**</div></pre></td></tr></table></figure></p>
+<p>def insert_sort(ary):<br>    n = len(ary)<br>    for i in range(1,n):<br>        if ary[i] &lt; ary[i-1]:<br>            temp = ary[i]<br>            index = i           #待插入的下标<br>            for j in range(i-1,-1,-1):  #从i-1 循环到 0 (包括0)<br>                if ary[j] &gt; temp :<br>                    ary[j+1] = ary[j]<br>                    index = j   #记录待插入下标<br>                else :<br>                    break<br>            ary[index] = temp<br>    return ary<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##四、希尔排序 ShellSort</div><div class="line">**介绍：**</div><div class="line"></div><div class="line">希尔排序，也称递减增量排序算法，实质是分组插入排序。由 Donald Shell 于1959年提出。希尔排序是非稳定排序算法。</div><div class="line"></div><div class="line">希尔排序的基本思想是：将数组列在一个表中并对列分别进行插入排序，重复这过程，不过每次用更长的列（步长更长了，列数更少了）来进行。最后整个表就只有一列了。将数组转换至表是为了更好地理解这算法，算法本身还是使用数组进行排序。</div><div class="line"></div><div class="line">例如，假设有这样一组数[ 13 14 94 33 82 25 59 94 65 23 45 27 73 25 39 10 ]，如果我们以步长为5开始进行排序，我们可以通过将这列表放在有5列的表中来更好地描述算法，这样他们就应该看起来是这样：</div></pre></td></tr></table></figure></p>
+<p>13 14 94 33 82<br>25 59 94 65 23<br>45 27 73 25 39<br>10<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">然后我们对每列进行排序：</div></pre></td></tr></table></figure></p>
+<p>10 14 73 25 23<br>13 27 94 33 39<br>25 59 94 65 82<br>45<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">将上述四行数字，依序接在一起时我们得到：`[ 10 14 73 25 23 13 27 94 33 39 25 59 94 65 82 45 ]`。这时10已经移至正确位置了，然后再以3为步长进行排序：</div></pre></td></tr></table></figure></p>
+<p>10 14 73<br>25 23 13<br>27 94 33<br>39 25 59<br>94 65 82<br>45<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">排序之后变为：</div></pre></td></tr></table></figure></p>
+<p>10 14 13<br>25 23 33<br>27 25 59<br>39 65 73<br>45 94 82<br>94<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">最后以1步长进行排序（此时就是简单的插入排序了）。</div><div class="line"></div><div class="line">**源代码：(python实现)**</div></pre></td></tr></table></figure></p>
+<p>def shell_sort(ary):<br>    n = len(ary)<br>    gap = round(n/2)       #初始步长 , 用round四舍五入取整<br>    while gap &gt; 0 :<br>        for i in range(gap,n):        #每一列进行插入排序 , 从gap 到 n-1<br>            temp = ary[i]<br>            j = i<br>            while ( j &gt;= gap and ary[j-gap] &gt; temp ):    #插入排序<br>                ary[j] = ary[j-gap]<br>                j = j - gap<br>            ary[j] = temp<br>        gap = round(gap/2)                     #重新设置步长<br>    return ary<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">上面源码的步长的选择是从n/2开始，每次再减半，直至为0。步长的选择直接决定了希尔排序的复杂度。在维基百科上有对于步长串行的详细介绍。</div><div class="line"></div><div class="line">## 五、归并排序 MergeSort</div><div class="line">**介绍：**</div><div class="line"></div><div class="line">归并排序是采用分治法的一个非常典型的应用。归并排序的思想就是先递归分解数组，再合并数组。</div><div class="line"></div><div class="line">先考虑合并两个有序数组，基本思路是比较两个数组的最前面的数，谁小就先取谁，取了后相应的指针就往后移一位。然后再比较，直至一个数组为空，最后把另一个数组的剩余部分复制过来即可。</div><div class="line"></div><div class="line">再考虑递归分解，基本思路是将数组分解成left和right，如果这两个数组内部数据是有序的，那么就可以用上面合并数组的方法将这两个数组合并排序。如何让这两个数组内部是有序的？可以再二分，直至分解出的小组只含有一个元素时为止，此时认为该小组内部已有序。然后合并排序相邻二个小组即可。</div><div class="line"></div><div class="line">**图示：**</div><div class="line">![归并排序图示](https://i.ooxx.ooo/2017/10/21/4a9de20bcc6b5211a24f52fb3be773a2.png</div><div class="line">)</div><div class="line"></div><div class="line">**源代码：(python实现)**</div></pre></td></tr></table></figure></p>
+<p>def merge_sort(ary):<br>    if len(ary) &lt;= 1 : return ary<br>    num = int(len(ary)/2)       #二分分解<br>    left = merge_sort(ary[:num])<br>    right = merge_sort(ary[num:])<br>    return merge(left,right)    #合并数组<br>def merge(left,right):<br>    ‘’’合并操作，<br>    将两个有序数组left[]和right[]合并成一个大的有序数组’’’<br>    l,r = 0,0           #left与right数组的下标指针<br>    result = []<br>    while l<len(left) and="" r<len(right)="" :="" if="" left[l]="" <="" right[r]:="" result.append(left[l])="" l="" +="1" else:="" result.append(right[r])="" r="" result="" return="" <figure="" class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## 六、快速排序 QuickSort</div><div class="line">**介绍：**</div><div class="line">快速排序通常明显比同为Ο(n log n)的其他算法更快，因此常被采用，而且快排采用了分治法的思想，所以在很多笔试面试中能经常看到快排的影子。可见掌握快排的重要性。</div><div class="line"></div><div class="line">**步骤：**</div><div class="line"></div><div class="line">- 从数列中挑出一个元素作为基准数。</div><div class="line">- 分区过程，将比基准数大的放到右边，小于或等于它的数都放到左边。</div><div class="line">- 再对左右区间递归执行第二步，直至各区间只有一个数。</div><div class="line">**排序图示：**</div><div class="line">![快排图示](https://i.ooxx.ooo/2017/10/21/1b232d722df3c3bd86b826d57c4be3d5.png)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">**源代码：(python实现)**</div></pre></td></tr></table></len(left)></p>
+<p>def quick_sort(ary):<br>    return qsort(ary,0,len(ary)-1)<br>def qsort(ary,left,right):</p>
+<pre><code>#快排函数，ary为待排序数组，left为待排序的左边界，right为右边界
+if left &gt;= right : return ary
+key = ary[left]     #取最左边的为基准数
+lp = left           #左指针
+rp = right          #右指针
+while lp &lt; rp :
+    while ary[rp] &gt;= key and lp &lt; rp :
+        rp -= 1
+    while ary[lp] &lt;= key and lp &lt; rp :
+        lp += 1
+    ary[lp],ary[rp] = ary[rp],ary[lp]
+ary[left],ary[lp] = ary[lp],ary[left]
+qsort(ary,left,lp-1)
+qsort(ary,rp+1,right)
+return ary
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">## 七、堆排序 HeapSort</div><div class="line">**介绍：**</div><div class="line"></div><div class="line">堆排序在 top K 问题中使用比较频繁。堆排序是采用二叉堆的数据结构来实现的，虽然实质上还是一维数组。二叉堆是一个近似完全二叉树 。</div><div class="line"></div><div class="line">二叉堆具有以下性质：</div><div class="line"></div><div class="line">- 父节点的键值总是大于或等于（小于或等于）任何一个子节点的键值。</div><div class="line">- 每个节点的左右子树都是一个二叉堆（都是最大堆或最小堆）。</div><div class="line">**步骤：**</div><div class="line"></div><div class="line">- 构造最大堆（Build_Max_Heap）：若数组下标范围为0~n，考虑到单独一个元素是大根堆，则从下标n/2开始的元素均为大根堆。于是只要从n/2-1开始，向前依次构造大根堆，这样就能保证，构造到某个节点时，它的左右子树都已经是大根堆。</div><div class="line"></div><div class="line">- 堆排序（HeapSort）：由于堆是用数组模拟的。得到一个大根堆后，数组内部并不是有序的。因此需要将堆化数组有序化。思想是移除根节点，并做最大堆调整的递归运算。第一次将heap[0]与heap[n-1]交换，再对heap[0...n-2]做最大堆调整。第二次将heap[0]与heap[n-2]交换，再对heap[0...n-3]做最大堆调整。重复该操作直至heap[0]和heap[1]交换。由于每次都是将最大的数并入到后面的有序区间，故操作完后整个数组就是有序的了。</div><div class="line"></div><div class="line">- 最大堆调整（Max_Heapify）：该方法是提供给上述两个过程调用的。目的是将堆的末端子节点作调整，使得子节点永远小于父节点 。</div><div class="line"></div><div class="line">**图示：**</div><div class="line">![1](https://i.ooxx.ooo/2017/10/21/3f5533ddaa07dbd57bba18a8a4d1f8ce.png)</div><div class="line">![2](https://i.ooxx.ooo/2017/10/21/d897ec5c5fe310716e289dd9bb0ee7fd.png)</div><div class="line"></div><div class="line"></div><div class="line">**源代码：(python实现)**</div></pre></td></tr></table></figure>
+<p>def heap_sort(ary) :<br>    n = len(ary)<br>    first = int(n/2-1)       #最后一个非叶子节点<br>    for start in range(first,-1,-1) :     #构造大根堆<br>        max_heapify(ary,start,n-1)<br>    for end in range(n-1,0,-1):           #堆排，将大根堆转换成有序数组<br>        ary[end],ary[0] = ary[0],ary[end]<br>        max_heapify(ary,0,end-1)<br>    return ary</p>
+<p>#最大堆调整：将堆的末端子节点作调整，使得子节点永远小于父节点</p>
+<p>#start为当前需要调整最大堆的位置，end为调整边界<br>def max_heapify(ary,start,end):<br>    root = start<br>    while True :<br>        child = root*2 +1               #调整节点的子节点<br>        if child &gt; end : break<br>        if child+1 &lt;= end and ary[child] &lt; ary[child+1] :<br>            child = child+1             #取较大的子节点<br>        if ary[root] &lt; ary[child] :     #较大的子节点成为父节点<br>            ary[root],ary[child] = ary[child],ary[root]     #交换<br>            root = child<br>        else :<br>            break<br>```            </p>
+<p>参考资料<br>维基百科：希尔排序，快速排序，归并排序，堆排序<br>白话经典算法系列<br>排序算法可视化<br>所谓堆和堆排序<br>几种经典排序算法<br><a href="http://wuchong.me/blog/2014/02/09/algorithm-sort-summary/" target="_blank" rel="external">http://wuchong.me/blog/2014/02/09/algorithm-sort-summary/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Yuan Zhe
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yuanzhe.me/2017/10/21/common-sort-algorithms-summary/" title="常见排序算法总结">https://yuanzhe.me/2017/10/21/common-sort-algorithms-summary/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Sort/" rel="tag"># Sort</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/21/LeetCode-Greedy-122-best-time-to-buy-and-sell-stock-ii/" rel="next" title="LeetCode 122. Best Time to Buy and Sell Stock II">
+                <i class="fa fa-chevron-left"></i> LeetCode 122. Best Time to Buy and Sell Stock II
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTE1NC83NzAz"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/heamon7.jpg"
+              alt="Yuan Zhe" />
+          
+            <p class="site-author-name" itemprop="name">Yuan Zhe</p>
+            <p class="site-description motion-element" itemprop="description">heamon7's blog</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/heamon7" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:heamon7@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/108975408423202366876" target="_blank" title="Google">
+                  
+                    <i class="fa fa-fw fa-google"></i>Google</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/heamon7" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/heamon7yz" target="_blank" title="FB Page">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://douban.com/people/heamon7" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>豆瓣</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/heamon7" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>知乎</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wuchong.me/" title="Jark's Blog(wuchong)" target="_blank">Jark's Blog(wuchong)</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.befuncool.com/" title="必富客" target="_blank">必富客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、冒泡排序-BubbleSort"><span class="nav-number">2.</span> <span class="nav-text">一、冒泡排序 BubbleSort</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 &mdash; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yuan Zhe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+
+  <div class="footer-custom">Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("jHpnzdU4Qd1QQxycao55wbRP-gzGzoHsz", "C31AmMJvRF6LgPCmOQvmJOM7");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
